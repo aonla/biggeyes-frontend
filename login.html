@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<style>
+body{text-align:center;font-family:sans-serif}
+input,button{width:90%;padding:12px;margin:10px}
+button{background:#c2185b;color:white;border:none;border-radius:25px}
+</style>
+</head>
+<body>
 
+<h2>Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+<p id="msg"></p>
+
+<script>
+async function login(){
+  const email=document.getElementById("email").value;
+  const password=document.getElementById("password").value;
+
+  const res=await fetch("https://biggeyes.onrender.com/api/auth/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email,password})
+  });
+
+  const data=await res.json();
+  document.getElementById("msg").innerText=data.message;
+
+  if(data.success){
+    localStorage.setItem("token",data.token);
+    window.location.href="home.html";
+  }
+}
+</script>
+
+</body>
+</html>
