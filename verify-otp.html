@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Verify OTP</title>
+<style>
+body{text-align:center;font-family:sans-serif}
+input,button{width:90%;padding:12px;margin:10px}
+button{background:#c2185b;color:white;border:none;border-radius:25px}
+</style>
+</head>
+<body>
 
+<h2>Verify OTP</h2>
+
+<input id="otp" placeholder="Enter OTP">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="verify()">Verify</button>
+<p id="msg"></p>
+
+<script>
+async function verify(){
+  const email=localStorage.getItem("reg_email");
+  const otp=document.getElementById("otp").value;
+  const password=document.getElementById("password").value;
+
+  const res=await fetch("https://biggeyes.onrender.com/api/auth/verify-otp",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email,otp,password})
+  });
+
+  const data=await res.json();
+  document.getElementById("msg").innerText=data.message;
+
+  if(data.success){
+    window.location.href="login.html";
+  }
+}
+</script>
+
+</body>
+</html>
