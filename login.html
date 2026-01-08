@@ -3,11 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+
 <style>
-body{text-align:center;font-family:sans-serif}
-input,button{width:90%;padding:12px;margin:10px}
-button{background:#c2185b;color:white;border:none;border-radius:25px}
+body{
+  text-align:center;
+  font-family:sans-serif;
+}
+input,button{
+  width:90%;
+  padding:12px;
+  margin:10px;
+}
+button{
+  background:#c2185b;
+  color:white;
+  border:none;
+  border-radius:25px;
+}
 </style>
+
+<!-- ✅ Already login check -->
+<script>
+if (localStorage.getItem("token")) {
+  window.location.replace("home.html");
+}
+</script>
+
 </head>
 <body>
 
@@ -17,25 +38,37 @@ button{background:#c2185b;color:white;border:none;border-radius:25px}
 <input id="password" type="password" placeholder="Password">
 
 <button onclick="login()">Login</button>
+
 <p id="msg"></p>
 
 <script>
 async function login(){
-  const email=document.getElementById("email").value;
-  const password=document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
-  const res=await fetch("https://biggeyes.onrender.com/api/auth/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({email,password})
-  });
+  document.getElementById("msg").innerText = "Logging in...";
 
-  const data=await res.json();
-  document.getElementById("msg").innerText=data.message;
+  try{
+    const res = await fetch("https://biggeyes.onrender.com/api/auth/login",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-  if(data.success){
-    localStorage.setItem("token",data.token);
-    window.location.href="home.html";
+    const data = await res.json();
+    document.getElementById("msg").innerText = data.message;
+
+    if(data.success){
+      localStorage.setItem("token", data.token);
+
+      // 🔥 FAST + CLEAN redirect
+      window.location.replace("home.html");
+    }
+
+  }catch(err){
+    document.getElementById("msg").innerText = "Server error, try again";
   }
 }
 </script>
