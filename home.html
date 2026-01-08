@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<style>
+body{text-align:center;font-family:sans-serif}
+button{padding:12px 30px;background:#c2185b;color:#fff;border:none;border-radius:25px}
+</style>
+</head>
+<body>
 
+<h2>Welcome to BiggEyes</h2>
+<p id="email"></p>
+
+<button onclick="logout()">Logout</button>
+
+<script>
+const token=localStorage.getItem("token");
+if(!token){
+  window.location.href="login.html";
+}
+
+fetch("https://biggeyes.onrender.com/api/user/profile",{
+  headers:{Authorization:"Bearer "+token}
+})
+.then(res=>res.json())
+.then(data=>{
+  document.getElementById("email").innerText=data.email || "";
+});
+
+function logout(){
+  localStorage.clear();
+  window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>
