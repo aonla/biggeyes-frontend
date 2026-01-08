@@ -35,6 +35,7 @@ async function verify(){
   document.getElementById("msg").innerText=data.message;
 
   if(data.success){
+    localStorage.removeItem("reg_email");
     window.location.href="login.html";
   }
 }
