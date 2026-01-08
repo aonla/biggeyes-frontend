@@ -13,6 +13,7 @@ button{background:#c2185b;color:#fff;border:none;border-radius:25px}
 
 <h2>Register</h2>
 
+<input id="username" placeholder="Username">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 
@@ -21,13 +22,14 @@ button{background:#c2185b;color:#fff;border:none;border-radius:25px}
 
 <script>
 async function register(){
+  const username=document.getElementById("username").value;
   const email=document.getElementById("email").value;
   const password=document.getElementById("password").value;
 
   const res=await fetch("https://biggeyes.onrender.com/api/auth/register",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({email,password})
+    body:JSON.stringify({username,email,password})
   });
 
   const data=await res.json();
