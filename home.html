@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
+
 <style>
-body{text-align:center;font-family:sans-serif}
+body{
+  text-align:center;
+  font-family:sans-serif;
+}
 button{
   padding:12px 30px;
   background:#c2185b;
@@ -15,10 +19,10 @@ button{
 }
 </style>
 
-<!-- 🔐 TOKEN GUARD -->
+<!-- 🔐 TOKEN GUARD (FAST) -->
 <script>
 if (!localStorage.getItem("token")) {
-  window.location.href = "login.html";
+  window.location.replace("login.html");
 }
 </script>
 
@@ -26,24 +30,31 @@ if (!localStorage.getItem("token")) {
 <body>
 
 <h2>Welcome to BiggEyes</h2>
-<p id="email"></p>
+<p id="email">Loading...</p>
 
 <button onclick="logout()">Logout</button>
 
 <script>
-const token=localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
 fetch("https://biggeyes.onrender.com/api/user/profile",{
-  headers:{Authorization:"Bearer "+token}
+  headers:{
+    "Authorization": "Bearer " + token
+  }
 })
-.then(res=>res.json())
-.then(data=>{
-  document.getElementById("email").innerText=data.email || "";
+.then(res => res.json())
+.then(data => {
+  document.getElementById("email").innerText = data.email || "";
+})
+.catch(() => {
+  document.getElementById("email").innerText = "";
 });
 
 function logout(){
   localStorage.clear();
-  window.location.href="login.html";
+
+  // 🔥 FAST redirect
+  window.location.replace("login.html");
 }
 </script>
 
