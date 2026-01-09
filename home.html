@@ -1,279 +1,301 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BiggEyes | Home</title>
+<title>BiggEyes – Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:sans-serif;
-  background:#fff;
-  color:#333;
+:root{
+  --pink:#c2185b;
+  --light:#fde4ee;
+  --gray:#ddd;
 }
 
-/* ===== TOP BAR ===== */
-.top{
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#fff;
+  color:#444;
+}
+
+/* ===== HEADER ===== */
+.header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px;
+  padding:12px 15px;
 }
+
 .logo{
   font-size:28px;
   font-weight:bold;
-  color:#c2185b;
+  color:var(--pink);
 }
-.right{
+
+.header-right{
   display:flex;
   align-items:center;
   gap:10px;
 }
-.icon{
-  width:34px;
-  height:34px;
+
+.icon-btn{
+  width:36px;
+  height:36px;
   border-radius:50%;
-  background:#f8bbd0;
+  background:#eee;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:18px;
-  cursor:pointer;
-}
-.username{
-  color:#c2185b;
-  font-weight:bold;
-}
-
-/* ===== LEFT BUTTONS ===== */
-.left-actions{
-  position:absolute;
-  left:10px;
-  top:90px;
-}
-.action-btn{
-  display:block;
-  background:#c2185b;
-  color:#fff;
-  border:none;
-  border-radius:20px;
-  padding:10px 18px;
-  margin-bottom:10px;
   cursor:pointer;
 }
 
-/* ===== PROFILE ===== */
+/* ===== PROFILE SECTION ===== */
 .profile{
   text-align:center;
-  margin-top:40px;
+  padding:10px 0;
 }
-.avatar{
-  width:180px;
-  height:180px;
+
+.pass-menu{
+  position:absolute;
+  left:15px;
+  top:70px;
+}
+
+.pass-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.small-circle{
+  width:14px;
+  height:14px;
+  border:2px solid var(--pink);
   border-radius:50%;
-  border:8px solid #c2185b;
-  margin:auto;
-  background:#f8bbd0;
+}
+
+.btn{
+  background:var(--pink);
+  color:#fff;
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.menu-btn{
+  display:block;
+  margin-top:6px;
+}
+
+/* ===== PROFILE IMAGE ===== */
+.profile-img{
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  background:var(--light);
+  border:6px solid var(--pink);
+  margin:20px auto 8px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#c2185b;
+  font-size:14px;
+  color:#777;
 }
-.handle{
-  margin-top:10px;
-  color:#c2185b;
+
+.username{
+  color:var(--pink);
   font-size:18px;
+  margin-top:5px;
 }
 
-/* ===== MAIN BUTTONS ===== */
-.center-actions{
-  text-align:center;
-  margin-top:15px;
-}
-.center-actions button{
-  background:#c2185b;
-  color:#fff;
-  border:none;
-  border-radius:22px;
-  padding:10px 22px;
-  margin:6px;
-  cursor:pointer;
-}
-
-/* ===== STORY / PHOTO ===== */
-.section{
-  padding:15px;
-}
-.section h3{
-  color:#c2185b;
-}
-.row{
+/* ===== ACTION BUTTONS ===== */
+.actions{
   display:flex;
-  overflow-x:auto;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin:15px 0;
 }
+
+/* ===== STORY / PHOTO SECTION ===== */
+.section{
+  padding:0 15px;
+}
+
+.section-title{
+  font-size:22px;
+  color:var(--pink);
+  margin:15px 0 8px;
+}
+
+.story-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
 .story{
   min-width:90px;
-  height:120px;
-  background:#c2185b;
-  border-radius:15px;
-  margin-right:10px;
+  height:90px;
+  background:var(--pink);
+  border-radius:12px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
 }
+
+.photo-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
 .photo{
-  min-width:90px;
-  height:90px;
-  background:#c2185b;
-  border-radius:15px;
-  margin-right:10px;
+  min-width:70px;
+  height:70px;
+  background:var(--pink);
+  border-radius:10px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
 }
 
 /* ===== TEXT ===== */
 .info{
-  padding:15px;
-  color:#c2185b;
-  font-weight:bold;
-}
-.sub{
-  padding:0 15px;
-  font-size:13px;
+  padding:10px 15px;
+  color:var(--pink);
+  font-size:16px;
 }
 
-/* ===== LOGOUT ===== */
-.logout{
-  text-align:center;
-  margin:20px 0 90px;
+.sub-info{
+  font-size:14px;
+  color:#777;
 }
-.logout button{
-  background:#c2185b;
-  color:#fff;
-  border:none;
-  border-radius:20px;
-  padding:10px 30px;
-  cursor:pointer;
+
+/* ===== FOOTER ===== */
+.logout{
+  display:flex;
+  justify-content:center;
+  margin:30px 0;
 }
 
 /* ===== BOTTOM NAV ===== */
-.bottom{
+.bottom-nav{
   position:fixed;
   bottom:0;
-  width:100%;
-  background:#fff;
-  border-top:1px solid #ddd;
+  left:0;
+  right:0;
+  height:55px;
+  border-top:1px solid #eee;
   display:flex;
   justify-content:space-around;
-  padding:10px 0;
+  align-items:center;
+  background:#fff;
 }
-.bottom span{
+
+.nav-item{
   font-size:22px;
   cursor:pointer;
 }
 </style>
-
-<!-- 🔐 TOKEN GUARD -->
-<script>
-if (!localStorage.getItem("token")) {
-  window.location.replace("login.html");
-}
-</script>
-
 </head>
+
 <body>
 
-<div class="top">
+<!-- HEADER -->
+<div class="header">
   <div class="logo">BiggEyes</div>
-  <div class="right">
-    <div class="icon" onclick="camera()">📷</div>
-    <div class="icon" onclick="add()">＋</div>
-    <div class="username" id="username">loading...</div>
+  <div class="header-right">
+    <div class="icon-btn">📷</div>
+    <div class="icon-btn">＋</div>
   </div>
 </div>
 
-<div class="left-actions">
-  <button class="action-btn" onclick="pass()">PASS</button>
-  <button class="action-btn" onclick="menu()">☰ MENU</button>
+<!-- PASS + MENU -->
+<div class="pass-menu">
+  <div class="pass-row">
+    <div class="small-circle"></div>
+    <button class="btn">PASS</button>
+  </div>
+  <button class="btn menu-btn">☰ MENU</button>
 </div>
 
+<!-- PROFILE -->
 <div class="profile">
-  <div class="avatar">Profile Photo</div>
-  <div class="handle" id="handle">@user</div>
-</div>
+  <div class="profile-img">Profile Photo</div>
+  <div class="username">@pramodaonla</div>
 
-<div class="center-actions">
-  <button onclick="best()">BEST</button>
-  <button onclick="vip()">VIP MODE</button>
-  <button onclick="follow()">FOLLOW</button><br>
-  <button onclick="fav()">MANPASAND</button>
-  <button onclick="more()">MORE</button>
-</div>
-
-<div class="section">
-  <h3>Story</h3>
-  <div class="row">
-    <div class="story"></div>
-    <div class="story"></div>
-    <div class="story"></div>
+  <div class="actions">
+    <button class="btn">BEST</button>
+    <button class="btn">VIP MODE</button>
+    <button class="btn">FOLLOW</button>
+    <button class="btn">MANPASAND</button>
+    <button class="btn">MORE</button>
   </div>
 </div>
 
+<!-- STORY -->
 <div class="section">
-  <h3>Photo</h3>
-  <div class="row">
-    <div class="photo"></div>
-    <div class="photo"></div>
-    <div class="photo"></div>
-    <div class="photo"></div>
+  <div class="section-title">Story</div>
+  <div class="story-row">
+    <div class="story">Story</div>
+    <div class="story">Story</div>
+    <div class="story">Story</div>
+    <div class="story">Story</div>
   </div>
 </div>
 
+<!-- PHOTO -->
+<div class="section">
+  <div class="section-title">Photo</div>
+  <div class="photo-row">
+    <div class="photo">Photo</div>
+    <div class="photo">Photo</div>
+    <div class="photo">Photo</div>
+    <div class="photo">Photo</div>
+  </div>
+</div>
+
+<!-- INFO -->
 <div class="info">
-Friends के द्वारा Post किये गये Photo, Video, File
-</div>
-<div class="sub">
-अभी के लिए ये सब आपके device पर locally save हो रहा है (demo)
+  Friends के द्वारा Post किये गये Photo, Video, File
+  <div class="sub-info">
+    अभी के लिए ये सब आपके device पर locally save हो रहा है (demo)
+  </div>
 </div>
 
+<!-- LOGOUT -->
 <div class="logout">
-  <button onclick="logout()">Logout</button>
+  <button class="btn">Logout</button>
 </div>
 
-<div class="bottom">
-  <span onclick="home()">🏠</span>
-  <span onclick="save()">🔖</span>
-  <span onclick="search()">🔍</span>
-  <span onclick="profile()">👤</span>
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item">🏠</div>
+  <div class="nav-item">🔖</div>
+  <div class="nav-item">🔍</div>
+  <div class="nav-item">👤</div>
 </div>
 
 <script>
-const token = localStorage.getItem("token");
-
-fetch("https://biggeyes.onrender.com/api/user/profile",{
-  headers:{ Authorization:"Bearer "+token }
-})
-.then(res=>res.json())
-.then(data=>{
-  if(data.username){
-    username.innerText = data.username;
-    handle.innerText = "@"+data.username;
-  }
+document.querySelectorAll('.btn,.story,.photo,.nav-item,.icon-btn')
+.forEach(el=>{
+  el.onclick=()=>alert('Clicked!');
 });
-
-/* CLICK HANDLERS (demo) */
-function logout(){ localStorage.clear(); location.replace("login.html"); }
-function pass(){ alert("PASS"); }
-function menu(){ alert("MENU"); }
-function camera(){ alert("Camera"); }
-function add(){ alert("Add"); }
-function best(){ alert("BEST"); }
-function vip(){ alert("VIP MODE"); }
-function follow(){ alert("FOLLOW"); }
-function fav(){ alert("MANPASAND"); }
-function more(){ alert("MORE"); }
-function home(){ }
-function save(){ }
-function search(){ }
-function profile(){ }
 </script>
 
 </body>
