@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>More - BiggEyes</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#fff;
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  padding:15px;
+  color:#c2185b;
+  font-size:22px;
+  font-weight:700;
+}
+.header span{
+  font-size:18px;
+  margin-right:10px;
+  cursor:pointer;
+}
+
+/* Card */
+.card{
+  background:#fde6ee;
+  margin:12px;
+  padding:15px;
+  border-radius:18px;
+}
+
+/* Button */
+.btn{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:none;
+  border-radius:30px;
+  background:#c2185b;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+.btn.outline{
+  background:#fff;
+  color:#c2185b;
+  border:2px solid #c2185b;
+}
+
+/* Text */
+.title{
+  color:#c2185b;
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:5px;
+}
+.text{
+  color:#444;
+  font-size:14px;
+  line-height:1.4;
+}
+</style>
+
+<!-- 🔐 TOKEN GUARD -->
+<script>
+if (!localStorage.getItem("token")) {
+  window.location.replace("login.html");
+}
+</script>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <span onclick="goHome()">←</span>
+  More
+</div>
+
+<!-- ACCOUNT -->
+<div class="card">
+  <div class="title">Profile & Account</div>
+  <div class="text">Profile, ID, photo aur personal details manage karein</div>
+  <button class="btn" onclick="openPage('account.html')">Account settings</button>
+</div>
+
+<!-- FRIENDS -->
+<div class="card">
+  <div class="title">Friends & Follow</div>
+  <div class="text">Friends, following aur requests manage karein</div>
+  <button class="btn" onclick="openPage('friends.html')">Friends list</button>
+</div>
+
+<!-- PASS -->
+<div class="card">
+  <div class="title">PASS / Monetize</div>
+  <div class="text">Channel monetize status aur BEST summary</div>
+  <button class="btn" onclick="openPage('pass.html')">PASS details</button>
+</div>
+
+<!-- WALLET -->
+<div class="card">
+  <div class="title">Wallet</div>
+  <div class="text">Balance check aur demo add</div>
+  <button class="btn" onclick="openPage('wallet.html')">Open wallet</button>
+</div>
+
+<!-- GAMES -->
+<div class="card">
+  <div class="title">Games</div>
+  <div class="text">BiggEyes mini games (demo)</div>
+  <button class="btn" onclick="openPage('games.html')">Play games</button>
+</div>
+
+<!-- LOGOUT -->
+<div class="card">
+  <button class="btn outline" onclick="logout()">Logout</button>
+</div>
+
+<script>
+function openPage(page){
+  window.location.href = page;
+}
+
+function goHome(){
+  window.location.href = "home.html";
+}
+
+function logout(){
+  localStorage.clear();
+  window.location.replace("login.html");
+}
+</script>
+
+</body>
+</html>
