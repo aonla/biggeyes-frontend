@@ -23,19 +23,20 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px 14px;
+  padding:14px 16px;
 }
 .logo{
-  font-size:26px;
+  font-size:30px;          /* 🔥 BIGGER */
+  font-weight:900;         /* 🔥 EXTRA BOLD */
   color:var(--pink);
-  font-weight:bold;
+  letter-spacing:1px;
 }
 .header-icons{
   display:flex;
   gap:10px;
 }
 .h-icon{
-  width:34px;height:34px;
+  width:36px;height:36px;
   border-radius:50%;
   background:var(--light);
   color:var(--pink);
@@ -48,8 +49,8 @@ body{
 /* PASS / MENU */
 .left-actions{
   position:absolute;
-  left:14px;
-  top:70px;
+  left:16px;
+  top:78px;
 }
 .pass-line{
   display:flex;
@@ -65,16 +66,17 @@ body{
   background:var(--pink);
   color:#fff;
   border:none;
-  padding:8px 16px;
-  border-radius:20px;
+  padding:8px 18px;
+  border-radius:22px;
   cursor:pointer;
+  font-size:14px;
 }
 .menu-btn{margin-top:8px}
 
 /* PROFILE */
 .profile{
   text-align:center;
-  margin-top:40px;
+  margin-top:44px;
 }
 .profile-circle{
   width:160px;height:160px;
@@ -102,14 +104,15 @@ body{
 .line-section{
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:8px 14px;
+  gap:10px;               /* 🔧 LESS LEFT GAP */
+  padding:8px 16px;
 }
 
 .line-title{
-  min-width:60px;
+  min-width:50px;         /* 🔧 LEFT SIDE NARROW */
   color:var(--pink);
   font-size:20px;
+  text-align:left;
 }
 
 .line-scroll{
@@ -117,11 +120,13 @@ body{
   gap:10px;
   overflow-x:auto;
   flex:1;
+  padding-left:6px;       /* 🔧 MOVE RIGHT A BIT */
 }
 
+/* STORY BOX */
 .story-box{
-  min-width:90px;
-  height:90px;
+  min-width:82px;         /* 🔧 SLIGHTLY SMALLER */
+  height:82px;
   background:var(--pink);
   border-radius:12px;
   color:#fff;
@@ -131,9 +136,10 @@ body{
   cursor:pointer;
 }
 
+/* PHOTO BOX */
 .photo-box{
-  min-width:70px;
-  height:70px;
+  min-width:78px;         /* 🔧 SLIGHTLY BIGGER */
+  height:78px;
   background:var(--pink);
   border-radius:10px;
   color:#fff;
@@ -145,10 +151,13 @@ body{
 
 /* INFO */
 .info{
-  padding:10px 14px;
+  padding:10px 16px;
   color:var(--pink);
 }
-.sub-info{color:#777;font-size:14px}
+.sub-info{
+  color:#777;
+  font-size:14px;
+}
 
 /* LOGOUT */
 .logout{
@@ -208,7 +217,7 @@ body{
   </div>
 </div>
 
-<!-- STORY LINE -->
+<!-- STORY -->
 <div class="line-section">
   <div class="line-title">Story</div>
   <div class="line-scroll">
@@ -220,7 +229,7 @@ body{
   </div>
 </div>
 
-<!-- PHOTO LINE (NO EXTRA GAP) -->
+<!-- PHOTO -->
 <div class="line-section">
   <div class="line-title">Photo</div>
   <div class="line-scroll">
