@@ -1,135 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>BiggEyes Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{margin:0;font-family:sans-serif;background:#fff;text-align:center}
+:root{
+  --pink:#c2185b;
+  --light:#fde6ef;
+}
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#fff}
 
-/* Header */
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 15px;
-}
-.logo{
-  color:#c2185b;
-  font-size:30px;
-  font-weight:900;
-}
-.icon{
-  background:#fde6ee;
-  border-radius:50%;
-  width:38px;
-  height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-left:8px;
+/* HEADER */
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.logo{font-size:30px;font-weight:900;color:var(--pink)}
+.header-icons{display:flex;gap:10px}
+.h-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--light);color:var(--pink);
+  display:flex;align-items:center;justify-content:center;
   cursor:pointer;
 }
 
-/* Buttons */
+/* PASS / MENU */
+.left-actions{position:absolute;left:16px;top:72px}
+.pass-line{display:flex;align-items:center;gap:6px}
+.pass-dot{width:12px;height:12px;border:2px solid var(--pink);border-radius:50%}
 .btn{
-  background:#c2185b;
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:25px;
-  margin:6px;
+  background:var(--pink);color:#fff;border:none;
+  padding:8px 18px;border-radius:22px;font-size:14px;
+  cursor:pointer;
+}
+.menu-btn{margin-top:6px}
+
+/* PROFILE */
+.profile{text-align:center;margin-top:28px}
+.profile-circle{
+  width:130px;height:130px;border-radius:50%;
+  background:var(--light);border:5px solid var(--pink);
+  margin:0 auto;display:flex;align-items:center;justify-content:center;
+}
+.user-id{color:var(--pink);margin:6px 0}
+.action-row{display:flex;justify-content:center;gap:8px;margin:4px 0;flex-wrap:wrap}
+
+/* STORY / PHOTO */
+.line-section{display:flex;align-items:center;gap:8px;padding:4px 16px}
+.line-title{min-width:48px;color:var(--pink);font-size:20px;cursor:pointer}
+.line-scroll{display:flex;gap:10px;overflow-x:auto;flex:1}
+.story-box,.photo-box{
+  min-width:78px;height:78px;background:var(--pink);
+  border-radius:12px;color:#fff;
+  display:flex;align-items:center;justify-content:center;
   cursor:pointer;
 }
 
-/* Profile */
-.profile{
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  border:8px solid #c2185b;
-  margin:10px auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fde6ee;
-}
-
-/* Grid */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:10px 20px;
-}
-.box{
-  background:#c2185b;
-  color:#fff;
-  border-radius:15px;
-  padding:30px 0;
-  cursor:pointer;
-}
-
-/* Posts */
+/* FEED */
+.feed{padding:8px 16px}
 .post{
-  background:#fde6ee;
-  margin:10px;
-  padding:10px;
-  border-radius:15px;
-  text-align:left;
+  background:#fff;border:1px solid #eee;border-radius:14px;
+  margin-bottom:14px;overflow:hidden;
 }
+.post-header{padding:10px;font-weight:bold;color:var(--pink)}
+.post-media{
+  height:220px;background:var(--light);
+  display:flex;align-items:center;justify-content:center;
+}
+.post-actions{padding:8px 10px;display:flex;gap:14px;font-size:18px}
+
+/* LOGOUT */
+.logout{text-align:center;margin:10px 0 70px}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:56px;
+  background:#fff;border-top:1px solid #eee;
+  display:flex;justify-content:space-around;align-items:center
+}
+.nav{font-size:22px;cursor:pointer}
 </style>
-
-<!-- 🔐 TOKEN GUARD -->
-<script>
-if(!localStorage.getItem("token")){
-  window.location.replace("login.html");
-}
-</script>
-
 </head>
+
 <body>
 
-<!-- TOP -->
-<div class="top">
+<!-- HEADER -->
+<div class="header">
   <div class="logo">BiggEyes</div>
-  <div style="display:flex">
-    <div class="icon" onclick="openGallery()">➕</div>
-    <div class="icon" onclick="openCamera()">📷</div>
-    <div class="icon" onclick="searchUser()">🔍</div>
+  <div class="header-icons">
+    <div class="h-icon" onclick="openGallery()">＋</div>
+    <div class="h-icon" onclick="openGallery()">🖼</div>
+    <div class="h-icon" onclick="searchUser()">🔍</div>
   </div>
 </div>
 
-<button class="btn" onclick="openPass()">PASS</button>
-<button class="btn" onclick="openMenu()">≡ MENU</button>
+<!-- PASS / MENU -->
+<div class="left-actions">
+  <div class="pass-line">
+    <div class="pass-dot"></div>
+    <button class="btn" onclick="alert('PASS')">PASS</button>
+  </div>
+  <button class="btn menu-btn" onclick="alert('MENU')">☰ MENU</button>
+</div>
 
-<div class="profile">Profile Photo</div>
-<div style="color:#c2185b">@userID</div>
+<!-- PROFILE -->
+<div class="profile">
+  <div class="profile-circle" onclick="openCamera()">Profile Photo</div>
+  <div class="user-id">@userID</div>
 
-<div>
-  <button class="btn" onclick="best()">BEST</button>
-  <button class="btn" onclick="vip()">VIP MODE</button>
-  <button class="btn" onclick="follow()">FOLLOW</button><br>
-  <button class="btn" onclick="manpasand()">MANPASAND</button>
-  <button class="btn" onclick="more()">MORE</button>
+  <div class="action-row">
+    <button class="btn" onclick="alert('BEST')">BEST</button>
+    <button class="btn" onclick="alert('VIP MODE')">VIP MODE</button>
+    <button class="btn" onclick="alert('FOLLOWED')">FOLLOW</button>
+  </div>
+  <div class="action-row">
+    <button class="btn" onclick="alert('MANPASAND')">MANPASAND</button>
+    <button class="btn" onclick="alert('MORE')">MORE</button>
+  </div>
 </div>
 
 <!-- STORY -->
-<h3 style="color:#c2185b;text-align:left;padding-left:20px">Story</h3>
-<div class="grid">
-  <div class="box" onclick="uploadStory()">Add Story</div>
+<div class="line-section">
+  <div class="line-title" onclick="openGallery()">Story</div>
+  <div class="line-scroll">
+    <div class="story-box" onclick="openGallery()">Add</div>
+  </div>
 </div>
 
 <!-- PHOTO -->
-<h3 style="color:#c2185b;text-align:left;padding-left:20px">Photo</h3>
-<div class="grid">
-  <div class="box" onclick="uploadPost()">Add Photo/Video</div>
+<div class="line-section">
+  <div class="line-title" onclick="openGallery()">Photo</div>
+  <div class="line-scroll">
+    <div class="photo-box" onclick="openGallery()">Add</div>
+  </div>
 </div>
 
-<!-- POSTS -->
-<div id="posts"></div>
+<!-- FEED -->
+<div class="feed" id="feed"></div>
 
-<button class="btn" onclick="logout()">Logout</button>
+<div class="logout">
+  <button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav" onclick="alert('Home')">🏠</div>
+  <div class="nav" onclick="alert('Trending')">🔥</div>
+  <div class="nav" onclick="searchUser()">🔍</div>
+  <div class="nav" onclick="alert('Profile')">👤</div>
+</div>
 
 <input type="file" id="file" accept="image/*,video/*" hidden>
 
@@ -139,38 +157,33 @@ function openGallery(){
 }
 
 function openCamera(){
-  document.getElementById("file").setAttribute("capture","environment");
-  document.getElementById("file").click();
+  const f=document.getElementById("file");
+  f.setAttribute("capture","environment");
+  f.click();
 }
 
 document.getElementById("file").onchange=function(){
   const file=this.files[0];
   if(!file)return;
+
   const post=document.createElement("div");
   post.className="post";
-  post.innerText="Uploaded: "+file.name;
-  document.getElementById("posts").prepend(post);
+  post.innerHTML=`
+    <div class="post-header">@userID</div>
+    <div class="post-media">${file.name}</div>
+    <div class="post-actions">❤️ 💬 🔗</div>
+  `;
+  document.getElementById("feed").prepend(post);
 }
-
-function uploadStory(){ alert("Story upload (demo)"); }
-function uploadPost(){ document.getElementById("file").click(); }
 
 function searchUser(){
-  const id=prompt("Enter User ID");
-  if(id) alert("Searching for "+id+" (demo)");
+  const u=prompt("Enter User ID");
+  if(u) alert("Searching: "+u);
 }
-
-function openPass(){ alert("PASS page"); }
-function openMenu(){ alert("Menu"); }
-function best(){ alert("BEST"); }
-function vip(){ alert("VIP MODE"); }
-function follow(){ alert("FOLLOWED"); }
-function manpasand(){ alert("MANPASAND"); }
-function more(){ window.location.href="more.html"; }
 
 function logout(){
   localStorage.clear();
-  window.location.replace("login.html");
+  location.href="login.html";
 }
 </script>
 
