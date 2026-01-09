@@ -11,138 +11,117 @@
   --light:#fde6ef;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
+*{box-sizing:border-box;font-family:Arial}
 
 body{
   margin:0;
   background:#fff;
-  color:#444;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:12px 14px;
 }
-
 .logo{
   font-size:26px;
-  font-weight:bold;
   color:var(--pink);
+  font-weight:bold;
 }
-
 .header-icons{
   display:flex;
   gap:10px;
 }
-
 .h-icon{
-  width:34px;
-  height:34px;
+  width:34px;height:34px;
   border-radius:50%;
   background:var(--light);
   color:var(--pink);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:18px;
   cursor:pointer;
 }
 
-/* ===== PASS + MENU ===== */
+/* PASS / MENU */
 .left-actions{
   position:absolute;
   left:14px;
   top:70px;
 }
-
 .pass-line{
   display:flex;
   align-items:center;
   gap:6px;
 }
-
 .pass-dot{
-  width:12px;
-  height:12px;
+  width:12px;height:12px;
   border:2px solid var(--pink);
   border-radius:50%;
 }
-
 .btn{
   background:var(--pink);
   color:#fff;
   border:none;
   padding:8px 16px;
   border-radius:20px;
-  font-size:14px;
   cursor:pointer;
 }
+.menu-btn{margin-top:8px}
 
-.menu-btn{
-  margin-top:8px;
-}
-
-/* ===== PROFILE ===== */
+/* PROFILE */
 .profile{
   text-align:center;
   margin-top:40px;
 }
-
 .profile-circle{
-  width:160px;
-  height:160px;
+  width:160px;height:160px;
   border-radius:50%;
   background:var(--light);
   border:6px solid var(--pink);
-  margin:0 auto 6px;
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#777;
 }
-
 .user-id{
   color:var(--pink);
-  font-size:18px;
-  margin-bottom:10px;
+  margin:8px 0;
 }
-
-/* ===== BUTTON ROWS ===== */
 .action-row{
   display:flex;
   justify-content:center;
   gap:10px;
-  margin:8px 0;
+  margin:6px 0;
   flex-wrap:wrap;
 }
 
-/* ===== SECTION ===== */
-.section{
-  padding:10px 14px;
+/* STORY + PHOTO LINE STRUCTURE */
+.line-section{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 14px;
 }
 
-.section-title{
+.line-title{
+  min-width:60px;
   color:var(--pink);
   font-size:20px;
-  margin-bottom:6px;
 }
 
-.row{
+.line-scroll{
   display:flex;
-  gap:12px;
+  gap:10px;
   overflow-x:auto;
-  padding-bottom:8px;
+  flex:1;
 }
 
 .story-box{
-  min-width:95px;
-  height:95px;
+  min-width:90px;
+  height:90px;
   background:var(--pink);
   border-radius:12px;
   color:#fff;
@@ -153,8 +132,8 @@ body{
 }
 
 .photo-box{
-  min-width:75px;
-  height:75px;
+  min-width:70px;
+  height:70px;
   background:var(--pink);
   border-radius:10px;
   color:#fff;
@@ -164,42 +143,31 @@ body{
   cursor:pointer;
 }
 
-/* ===== INFO ===== */
+/* INFO */
 .info{
   padding:10px 14px;
   color:var(--pink);
-  font-size:16px;
 }
+.sub-info{color:#777;font-size:14px}
 
-.sub-info{
-  color:#777;
-  font-size:14px;
-}
-
-/* ===== LOGOUT ===== */
+/* LOGOUT */
 .logout{
   text-align:center;
-  margin:25px 0 70px;
+  margin:20px 0 70px;
 }
 
-/* ===== BOTTOM NAV ===== */
+/* BOTTOM NAV */
 .bottom-nav{
   position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
+  bottom:0;left:0;right:0;
   height:56px;
-  border-top:1px solid #eee;
   background:#fff;
+  border-top:1px solid #eee;
   display:flex;
   justify-content:space-around;
   align-items:center;
 }
-
-.nav{
-  font-size:22px;
-  cursor:pointer;
-}
+.nav{font-size:22px;cursor:pointer}
 </style>
 </head>
 
@@ -234,17 +202,17 @@ body{
     <button class="btn">VIP MODE</button>
     <button class="btn">FOLLOW</button>
   </div>
-
   <div class="action-row">
     <button class="btn">MANPASAND</button>
     <button class="btn">MORE</button>
   </div>
 </div>
 
-<!-- STORY -->
-<div class="section">
-  <div class="section-title">Story</div>
-  <div class="row">
+<!-- STORY LINE -->
+<div class="line-section">
+  <div class="line-title">Story</div>
+  <div class="line-scroll">
+    <div class="story-box">Story</div>
     <div class="story-box">Story</div>
     <div class="story-box">Story</div>
     <div class="story-box">Story</div>
@@ -252,10 +220,11 @@ body{
   </div>
 </div>
 
-<!-- PHOTO -->
-<div class="section">
-  <div class="section-title">Photo</div>
-  <div class="row">
+<!-- PHOTO LINE (NO EXTRA GAP) -->
+<div class="line-section">
+  <div class="line-title">Photo</div>
+  <div class="line-scroll">
+    <div class="photo-box">Photo</div>
     <div class="photo-box">Photo</div>
     <div class="photo-box">Photo</div>
     <div class="photo-box">Photo</div>
@@ -265,7 +234,7 @@ body{
 
 <!-- INFO -->
 <div class="info">
-  User के द्वारा Post की गई Photo और Video
+  User के द्वारा Post की गई Photo, Video
   <div class="sub-info">
     अभी के लिए data device में locally save है (demo)
   </div>
@@ -286,9 +255,9 @@ body{
 
 <script>
 document.querySelectorAll(
-  'button,.story-box,.photo-box,.nav,.h-icon'
+ 'button,.story-box,.photo-box,.nav,.h-icon'
 ).forEach(el=>{
-  el.onclick=()=>alert('Clicked');
+ el.onclick=()=>alert('Clicked');
 });
 </script>
 
