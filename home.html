@@ -1,270 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>BiggEyes Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --pink:#c2185b;
-  --light:#fde6ef;
-}
+body{margin:0;font-family:sans-serif;background:#fff;text-align:center}
 
-*{box-sizing:border-box;font-family:Arial}
-
-body{
-  margin:0;
-  background:#fff;
-}
-
-/* HEADER */
-.header{
+/* Header */
+.top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px 16px;
+  padding:10px 15px;
 }
 .logo{
+  color:#c2185b;
   font-size:30px;
   font-weight:900;
-  color:var(--pink);
 }
-.header-icons{
-  display:flex;
-  gap:10px;
-}
-.h-icon{
-  width:36px;height:36px;
+.icon{
+  background:#fde6ee;
   border-radius:50%;
-  background:var(--light);
-  color:var(--pink);
+  width:38px;
+  height:38px;
   display:flex;
   align-items:center;
   justify-content:center;
+  margin-left:8px;
+  cursor:pointer;
 }
 
-/* PASS / MENU */
-.left-actions{
-  position:absolute;
-  left:16px;
-  top:72px;
-}
-.pass-line{
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.pass-dot{
-  width:12px;height:12px;
-  border:2px solid var(--pink);
-  border-radius:50%;
-}
+/* Buttons */
 .btn{
-  background:var(--pink);
+  background:#c2185b;
   color:#fff;
   border:none;
-  padding:8px 18px;
-  border-radius:22px;
-  font-size:14px;
+  padding:10px 18px;
+  border-radius:25px;
+  margin:6px;
+  cursor:pointer;
 }
-.menu-btn{margin-top:6px}
 
-/* PROFILE (🔧 COMPACT) */
+/* Profile */
 .profile{
-  text-align:center;
-  margin-top:28px;
-}
-.profile-circle{
-  width:130px;            /* 🔧 SMALLER */
-  height:130px;
+  width:160px;
+  height:160px;
   border-radius:50%;
-  background:var(--light);
-  border:5px solid var(--pink);
-  margin:0 auto;
+  border:8px solid #c2185b;
+  margin:10px auto;
   display:flex;
   align-items:center;
   justify-content:center;
-}
-.user-id{
-  color:var(--pink);
-  margin:6px 0;
-}
-.action-row{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:4px 0;
-  flex-wrap:wrap;
+  background:#fde6ee;
 }
 
-/* STORY / PHOTO */
-.line-section{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:4px 16px;     /* 🔧 GAP REMOVED */
-}
-.line-title{
-  min-width:48px;
-  color:var(--pink);
-  font-size:20px;
-}
-.line-scroll{
-  display:flex;
+/* Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
-  overflow-x:auto;
-  flex:1;
+  padding:10px 20px;
 }
-.story-box,
-.photo-box{
-  min-width:78px;
-  height:78px;
-  background:var(--pink);
-  border-radius:12px;
+.box{
+  background:#c2185b;
   color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border-radius:15px;
+  padding:30px 0;
+  cursor:pointer;
 }
 
-/* POST FEED (🔥 FACEBOOK STYLE) */
-.feed{
-  padding:8px 16px;
-}
+/* Posts */
 .post{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:14px;
-  margin-bottom:14px;
-  overflow:hidden;
-}
-.post-header{
+  background:#fde6ee;
+  margin:10px;
   padding:10px;
-  font-weight:bold;
-  color:var(--pink);
+  border-radius:15px;
+  text-align:left;
 }
-.post-media{
-  height:220px;
-  background:var(--light);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#777;
-}
-.post-actions{
-  padding:8px 10px;
-  display:flex;
-  gap:14px;
-  font-size:18px;
-}
-
-/* LOGOUT */
-.logout{
-  text-align:center;
-  margin:10px 0 70px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  height:56px;
-  background:#fff;
-  border-top:1px solid #eee;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-}
-.nav{font-size:22px}
 </style>
-</head>
 
+<!-- 🔐 TOKEN GUARD -->
+<script>
+if(!localStorage.getItem("token")){
+  window.location.replace("login.html");
+}
+</script>
+
+</head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
+<!-- TOP -->
+<div class="top">
   <div class="logo">BiggEyes</div>
-  <div class="header-icons">
-    <div class="h-icon">＋</div>
-    <div class="h-icon">🖼</div>
-    <div class="h-icon">🔍</div>
+  <div style="display:flex">
+    <div class="icon" onclick="openGallery()">➕</div>
+    <div class="icon" onclick="openCamera()">📷</div>
+    <div class="icon" onclick="searchUser()">🔍</div>
   </div>
 </div>
 
-<!-- PASS / MENU -->
-<div class="left-actions">
-  <div class="pass-line">
-    <div class="pass-dot"></div>
-    <button class="btn">PASS</button>
-  </div>
-  <button class="btn menu-btn">☰ MENU</button>
-</div>
+<button class="btn" onclick="openPass()">PASS</button>
+<button class="btn" onclick="openMenu()">≡ MENU</button>
 
-<!-- PROFILE -->
-<div class="profile">
-  <div class="profile-circle">Profile Photo</div>
-  <div class="user-id">@userID</div>
+<div class="profile">Profile Photo</div>
+<div style="color:#c2185b">@userID</div>
 
-  <div class="action-row">
-    <button class="btn">BEST</button>
-    <button class="btn">VIP MODE</button>
-    <button class="btn">FOLLOW</button>
-  </div>
-  <div class="action-row">
-    <button class="btn">MANPASAND</button>
-    <button class="btn">MORE</button>
-  </div>
+<div>
+  <button class="btn" onclick="best()">BEST</button>
+  <button class="btn" onclick="vip()">VIP MODE</button>
+  <button class="btn" onclick="follow()">FOLLOW</button><br>
+  <button class="btn" onclick="manpasand()">MANPASAND</button>
+  <button class="btn" onclick="more()">MORE</button>
 </div>
 
 <!-- STORY -->
-<div class="line-section">
-  <div class="line-title">Story</div>
-  <div class="line-scroll">
-    <div class="story-box">Story</div>
-    <div class="story-box">Story</div>
-    <div class="story-box">Story</div>
-    <div class="story-box">Story</div>
-  </div>
+<h3 style="color:#c2185b;text-align:left;padding-left:20px">Story</h3>
+<div class="grid">
+  <div class="box" onclick="uploadStory()">Add Story</div>
 </div>
 
 <!-- PHOTO -->
-<div class="line-section">
-  <div class="line-title">Photo</div>
-  <div class="line-scroll">
-    <div class="photo-box">Photo</div>
-    <div class="photo-box">Photo</div>
-    <div class="photo-box">Photo</div>
-  </div>
+<h3 style="color:#c2185b;text-align:left;padding-left:20px">Photo</h3>
+<div class="grid">
+  <div class="box" onclick="uploadPost()">Add Photo/Video</div>
 </div>
 
-<!-- 🔥 POST FEED -->
-<div class="feed">
-  <div class="post">
-    <div class="post-header">@userID</div>
-    <div class="post-media">Photo / Video</div>
-    <div class="post-actions">❤️ 💬 🔗</div>
-  </div>
+<!-- POSTS -->
+<div id="posts"></div>
 
-  <div class="post">
-    <div class="post-header">@userID</div>
-    <div class="post-media">Video</div>
-    <div class="post-actions">❤️ 💬 🔗</div>
-  </div>
-</div>
+<button class="btn" onclick="logout()">Logout</button>
 
-<!-- LOGOUT -->
-<div class="logout">
-  <button class="btn">Logout</button>
-</div>
+<input type="file" id="file" accept="image/*,video/*" hidden>
 
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
-  <div class="nav">🏠</div>
-  <div class="nav">🔥</div>
-  <div class="nav">🔍</div>
-  <div class="nav">👤</div>
-</div>
+<script>
+function openGallery(){
+  document.getElementById("file").click();
+}
+
+function openCamera(){
+  document.getElementById("file").setAttribute("capture","environment");
+  document.getElementById("file").click();
+}
+
+document.getElementById("file").onchange=function(){
+  const file=this.files[0];
+  if(!file)return;
+  const post=document.createElement("div");
+  post.className="post";
+  post.innerText="Uploaded: "+file.name;
+  document.getElementById("posts").prepend(post);
+}
+
+function uploadStory(){ alert("Story upload (demo)"); }
+function uploadPost(){ document.getElementById("file").click(); }
+
+function searchUser(){
+  const id=prompt("Enter User ID");
+  if(id) alert("Searching for "+id+" (demo)");
+}
+
+function openPass(){ alert("PASS page"); }
+function openMenu(){ alert("Menu"); }
+function best(){ alert("BEST"); }
+function vip(){ alert("VIP MODE"); }
+function follow(){ alert("FOLLOWED"); }
+function manpasand(){ alert("MANPASAND"); }
+function more(){ window.location.href="more.html"; }
+
+function logout(){
+  localStorage.clear();
+  window.location.replace("login.html");
+}
+</script>
 
 </body>
 </html>
