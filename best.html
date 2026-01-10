@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Best | BiggEyes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial}
+.header{background:#c2185b;color:#fff;padding:14px;text-align:center}
+.feed{padding:16px}
+.post{
+  background:#fde6ef;padding:14px;
+  border-radius:14px;margin-bottom:12px
+}
+.back{position:fixed;bottom:20px;left:50%;transform:translateX(-50%)}
+button{
+  background:#c2185b;color:#fff;border:none;
+  padding:10px 22px;border-radius:22px
+}
+</style>
+</head>
+<body>
+
+<div class="header">Best Posts</div>
+<div class="feed" id="feed"></div>
+
+<div class="back">
+  <button onclick="history.back()">⬅ Back</button>
+</div>
+
+<script>
+fetch("https://biggeyes.onrender.com/api/post/best",{credentials:"include"})
+.then(r=>r.json())
+.then(d=>{
+  if(!d.posts)return;
+  d.posts.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="post";
+    div.innerHTML=`<b>@${p.user}</b><br>${p.text||"Post"}`;
+    feed.appendChild(div);
+  });
+})
+.catch(()=>alert("Server error"));
+</script>
+
+</body>
+</html>
