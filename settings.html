@@ -1,142 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Settings</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-:root{
-  --pink:#c2185b;
-  --light:#fde6ef;
-}
-body{
-  margin:0;
-  font-family:Arial;
-  background:#fff;
-}
-
-/* HEADER */
-.header{
-  background:var(--pink);
-  color:#fff;
-  padding:14px;
-  text-align:center;
-  font-size:20px;
-}
-
-/* CARD */
-.card{
-  margin:14px;
-  background:var(--light);
-  border-radius:16px;
-  overflow:hidden;
-}
-
-/* ITEM */
-.item{
-  padding:16px;
-  border-bottom:1px solid #f3c4d6;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:16px;
-  cursor:pointer;
-}
-.item:last-child{border-bottom:none}
-.item span{font-size:18px}
-
-/* TOGGLE */
-.toggle{
-  width:46px;
-  height:24px;
-  background:#ccc;
-  border-radius:20px;
-  position:relative;
-}
-.toggle::after{
-  content:'';
-  width:20px;
-  height:20px;
-  background:#fff;
-  position:absolute;
-  top:2px;
-  left:2px;
-  border-radius:50%;
-}
-.toggle.on{
-  background:var(--pink);
-}
-.toggle.on::after{
-  left:24px;
-}
-
-/* BACK */
-.back{
-  margin:24px;
-  text-align:center;
-}
-button{
-  background:var(--pink);
-  color:#fff;
-  border:none;
-  padding:10px 26px;
-  border-radius:24px;
-  font-size:16px;
-  cursor:pointer;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="header">Settings</div>
 
+<div class="container">
+
 <div class="card">
-  <div class="item" onclick="toggle(this)">
-    Notifications
-    <div class="toggle"></div>
-  </div>
+  <h3>Profile & ID</h3>
+  Email: user@gmail.com<br>
+  BiggEyes ID: @username<br><br>
+  <button class="btn-outline btn">Edit Name</button>
+  <button class="btn-outline btn">Change Photo</button>
+</div>
 
-  <div class="item" onclick="toggle(this)">
-    Private Account
-    <div class="toggle"></div>
-  </div>
+<div class="card">
+  <h3>Wallet</h3>
+  Balance: ₹0<br><br>
+  <button class="btn">+ ₹10 demo</button>
+  <button class="btn-outline btn">Reset</button>
+</div>
 
-  <div class="item" onclick="changePassword()">
-    Change Password
-    <span>›</span>
-  </div>
-
-  <div class="item" onclick="logout()">
-    Logout
-    <span>›</span>
-  </div>
+<div class="card">
+  <h3>Games</h3>
+  <button class="btn">Sky Runner</button><br><br>
+  <button class="btn">Balloon Pop</button>
 </div>
 
 <div class="back">
-  <button onclick="history.back()">← Back</button>
+  <button class="btn" onclick="history.back()">← Back</button>
 </div>
 
-<script>
-function toggle(el){
-  const t = el.querySelector(".toggle");
-  if(!t) return;
-  t.classList.toggle("on");
-
-  // future backend save
-  // fetch("/api/user/settings",{method:"POST"})
-}
-
-function changePassword(){
-  alert("Password change feature coming soon");
-}
-
-function logout(){
-  localStorage.clear();
-  location.href="login.html";
-}
-</script>
-
+</div>
 </body>
 </html>
