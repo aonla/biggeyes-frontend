@@ -15,7 +15,7 @@ body{margin:0;background:#fff}
 
 /* HEADER */
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
-.logo{font-size:30px;font-weight:900;color:var(--pink)}
+.logo{font-size:34px;font-weight:900;color:var(--pink)}
 .header-icons{display:flex;gap:10px}
 .h-icon{
   width:36px;height:36px;border-radius:50%;
@@ -38,31 +38,23 @@ body{margin:0;background:#fff}
 /* PROFILE */
 .profile{text-align:center;margin-top:28px}
 .profile-circle{
-  width:130px;height:130px;border-radius:50%;
+  width:120px;height:120px;border-radius:50%;
   background:var(--light);border:5px solid var(--pink);
   margin:0 auto;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
 }
 .user-id{color:var(--pink);margin:6px 0}
 .action-row{display:flex;justify-content:center;gap:8px;margin:4px 0;flex-wrap:wrap}
 
 /* STORY / PHOTO */
-.line-section{display:flex;align-items:center;gap:8px;padding:6px 16px}
-.line-title{min-width:52px;color:var(--pink);font-size:20px;cursor:pointer}
+.line-section{display:flex;align-items:center;gap:8px;padding:4px 16px}
+.line-title{min-width:60px;color:var(--pink);font-size:20px;cursor:pointer}
 .line-scroll{display:flex;gap:10px;overflow-x:auto;flex:1}
-
-/* BOXES */
 .story-box,.photo-box{
-  min-width:78px;height:78px;
-  background:var(--pink);
+  min-width:78px;height:78px;background:var(--pink);
   border-radius:12px;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-size:14px;
-}
-
-/* disabled look */
-.disabled{
-  opacity:.4;
-  pointer-events:none;
+  cursor:pointer;
 }
 
 /* FEED */
@@ -93,12 +85,19 @@ body{margin:0;background:#fff}
 
 <body>
 
+<!-- 🔐 TOKEN GUARD -->
+<script>
+if(!localStorage.getItem("token")){
+  location.replace("login.html");
+}
+</script>
+
 <!-- HEADER -->
 <div class="header">
   <div class="logo">BiggEyes</div>
   <div class="header-icons">
-    <div class="h-icon" onclick="openGallery('story')">＋</div>
-    <div class="h-icon" onclick="openGallery('photo')">🖼</div>
+    <div class="h-icon" onclick="openGallery()">＋</div>
+    <div class="h-icon" onclick="openGallery()">🖼</div>
     <div class="h-icon" onclick="searchUser()">🔍</div>
   </div>
 </div>
@@ -107,46 +106,40 @@ body{margin:0;background:#fff}
 <div class="left-actions">
   <div class="pass-line">
     <div class="pass-dot"></div>
-    <button class="btn">PASS</button>
+    <button class="btn" onclick="goPage('best.html')">PASS</button>
   </div>
-  <button class="btn menu-btn">☰ MENU</button>
+  <button class="btn menu-btn" onclick="goPage('more.html')">☰ MENU</button>
 </div>
 
 <!-- PROFILE -->
 <div class="profile">
-  <div class="profile-circle" onclick="openCamera()">Profile Photo</div>
-  <div class="user-id">@userID</div>
+  <div class="profile-circle" onclick="openCamera()">Profile</div>
+  <div class="user-id" id="uid">@user</div>
 
   <div class="action-row">
-    <button class="btn">BEST</button>
-    <button class="btn">VIP MODE</button>
-    <button class="btn">FOLLOW</button>
+    <button class="btn" onclick="goPage('best.html')">BEST</button>
+    <button class="btn" onclick="goPage('vip.html')">VIP MODE</button>
+    <button class="btn" onclick="goPage('follow.html')">FOLLOW</button>
   </div>
   <div class="action-row">
-    <button class="btn">MANPASAND</button>
-    <button class="btn">MORE</button>
+    <button class="btn" onclick="goPage('saved.html')">MANPASAND</button>
+    <button class="btn" onclick="goPage('more.html')">MORE</button>
   </div>
 </div>
 
 <!-- STORY -->
 <div class="line-section">
-  <div class="line-title" onclick="openGallery('story')">Story</div>
-  <div class="line-scroll" id="storyRow">
-    <div class="story-box" onclick="openGallery('story')">Add</div>
-    <div class="story-box disabled">Story</div>
-    <div class="story-box disabled">Story</div>
-    <div class="story-box disabled">Story</div>
+  <div class="line-title" onclick="openGallery()">Story</div>
+  <div class="line-scroll">
+    <div class="story-box" onclick="openGallery()">Add</div>
   </div>
 </div>
 
 <!-- PHOTO -->
 <div class="line-section">
-  <div class="line-title" onclick="openGallery('photo')">Photo</div>
-  <div class="line-scroll" id="photoRow">
-    <div class="photo-box" onclick="openGallery('photo')">Add</div>
-    <div class="photo-box disabled">Photo</div>
-    <div class="photo-box disabled">Photo</div>
-    <div class="photo-box disabled">Photo</div>
+  <div class="line-title" onclick="openGallery()">Photo</div>
+  <div class="line-scroll">
+    <div class="photo-box" onclick="openGallery()">Add</div>
   </div>
 </div>
 
@@ -157,23 +150,25 @@ body{margin:0;background:#fff}
   <button class="btn" onclick="logout()">Logout</button>
 </div>
 
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav">🏠</div>
-  <div class="nav">🔥</div>
+  <div class="nav" onclick="location.href='home.html'">🏠</div>
+  <div class="nav" onclick="goPage('best.html')">🔥</div>
   <div class="nav" onclick="searchUser()">🔍</div>
-  <div class="nav">👤</div>
+  <div class="nav" onclick="goPage('more.html')">👤</div>
 </div>
 
-<input type="file" id="file" hidden>
+<input type="file" id="file" accept="image/*,video/*" hidden>
 
 <script>
-let currentType="photo";
+const API="https://biggeyes.onrender.com";
 
-function openGallery(type){
-  currentType=type;
-  const f=document.getElementById("file");
-  f.accept = type==="story" ? "image/*,video/*" : "image/*";
-  f.click();
+function goPage(p){
+  location.href=p;
+}
+
+function openGallery(){
+  document.getElementById("file").click();
 }
 
 function openCamera(){
@@ -186,32 +181,37 @@ document.getElementById("file").onchange=function(){
   const file=this.files[0];
   if(!file)return;
 
-  // FEED POST
   const post=document.createElement("div");
   post.className="post";
   post.innerHTML=`
-    <div class="post-header">@userID</div>
+    <div class="post-header">@You</div>
     <div class="post-media">${file.name}</div>
     <div class="post-actions">❤️ 💬 🔗</div>
   `;
   document.getElementById("feed").prepend(post);
-
-  // ENABLE BOXES
-  const boxes = document.querySelectorAll(
-    currentType==="story" ? ".story-box" : ".photo-box"
-  );
-  boxes.forEach(b=>b.classList.remove("disabled"));
 };
 
 function searchUser(){
-  const u=prompt("Enter User ID");
-  if(u) alert("Searching: "+u);
+  const u=prompt("Enter user id");
+  if(u) alert("Searching "+u);
 }
 
 function logout(){
-  localStorage.clear();
-  location.href="login.html";
+  fetch(API+"/api/auth/logout",{credentials:"include"})
+  .finally(()=>{
+    localStorage.clear();
+    location.href="login.html";
+  });
 }
+
+/* LOAD PROFILE */
+fetch(API+"/api/user/profile",{
+  headers:{Authorization:"Bearer "+localStorage.getItem("token")}
+})
+.then(r=>r.json())
+.then(d=>{
+  if(d.email) document.getElementById("uid").innerText="@"+d.email.split("@")[0];
+});
 </script>
 
 </body>
