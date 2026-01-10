@@ -46,14 +46,23 @@ body{margin:0;background:#fff}
 .action-row{display:flex;justify-content:center;gap:8px;margin:4px 0;flex-wrap:wrap}
 
 /* STORY / PHOTO */
-.line-section{display:flex;align-items:center;gap:8px;padding:4px 16px}
-.line-title{min-width:48px;color:var(--pink);font-size:20px;cursor:pointer}
+.line-section{display:flex;align-items:center;gap:8px;padding:6px 16px}
+.line-title{min-width:52px;color:var(--pink);font-size:20px;cursor:pointer}
 .line-scroll{display:flex;gap:10px;overflow-x:auto;flex:1}
+
+/* BOXES */
 .story-box,.photo-box{
-  min-width:78px;height:78px;background:var(--pink);
+  min-width:78px;height:78px;
+  background:var(--pink);
   border-radius:12px;color:#fff;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
+  font-size:14px;
+}
+
+/* disabled look */
+.disabled{
+  opacity:.4;
+  pointer-events:none;
 }
 
 /* FEED */
@@ -88,8 +97,8 @@ body{margin:0;background:#fff}
 <div class="header">
   <div class="logo">BiggEyes</div>
   <div class="header-icons">
-    <div class="h-icon" onclick="openGallery()">＋</div>
-    <div class="h-icon" onclick="openGallery()">🖼</div>
+    <div class="h-icon" onclick="openGallery('story')">＋</div>
+    <div class="h-icon" onclick="openGallery('photo')">🖼</div>
     <div class="h-icon" onclick="searchUser()">🔍</div>
   </div>
 </div>
@@ -98,9 +107,9 @@ body{margin:0;background:#fff}
 <div class="left-actions">
   <div class="pass-line">
     <div class="pass-dot"></div>
-    <button class="btn" onclick="alert('PASS')">PASS</button>
+    <button class="btn">PASS</button>
   </div>
-  <button class="btn menu-btn" onclick="alert('MENU')">☰ MENU</button>
+  <button class="btn menu-btn">☰ MENU</button>
 </div>
 
 <!-- PROFILE -->
@@ -109,29 +118,35 @@ body{margin:0;background:#fff}
   <div class="user-id">@userID</div>
 
   <div class="action-row">
-    <button class="btn" onclick="alert('BEST')">BEST</button>
-    <button class="btn" onclick="alert('VIP MODE')">VIP MODE</button>
-    <button class="btn" onclick="alert('FOLLOWED')">FOLLOW</button>
+    <button class="btn">BEST</button>
+    <button class="btn">VIP MODE</button>
+    <button class="btn">FOLLOW</button>
   </div>
   <div class="action-row">
-    <button class="btn" onclick="alert('MANPASAND')">MANPASAND</button>
-    <button class="btn" onclick="alert('MORE')">MORE</button>
+    <button class="btn">MANPASAND</button>
+    <button class="btn">MORE</button>
   </div>
 </div>
 
 <!-- STORY -->
 <div class="line-section">
-  <div class="line-title" onclick="openGallery()">Story</div>
-  <div class="line-scroll">
-    <div class="story-box" onclick="openGallery()">Add</div>
+  <div class="line-title" onclick="openGallery('story')">Story</div>
+  <div class="line-scroll" id="storyRow">
+    <div class="story-box" onclick="openGallery('story')">Add</div>
+    <div class="story-box disabled">Story</div>
+    <div class="story-box disabled">Story</div>
+    <div class="story-box disabled">Story</div>
   </div>
 </div>
 
 <!-- PHOTO -->
 <div class="line-section">
-  <div class="line-title" onclick="openGallery()">Photo</div>
-  <div class="line-scroll">
-    <div class="photo-box" onclick="openGallery()">Add</div>
+  <div class="line-title" onclick="openGallery('photo')">Photo</div>
+  <div class="line-scroll" id="photoRow">
+    <div class="photo-box" onclick="openGallery('photo')">Add</div>
+    <div class="photo-box disabled">Photo</div>
+    <div class="photo-box disabled">Photo</div>
+    <div class="photo-box disabled">Photo</div>
   </div>
 </div>
 
@@ -143,17 +158,22 @@ body{margin:0;background:#fff}
 </div>
 
 <div class="bottom-nav">
-  <div class="nav" onclick="alert('Home')">🏠</div>
-  <div class="nav" onclick="alert('Trending')">🔥</div>
+  <div class="nav">🏠</div>
+  <div class="nav">🔥</div>
   <div class="nav" onclick="searchUser()">🔍</div>
-  <div class="nav" onclick="alert('Profile')">👤</div>
+  <div class="nav">👤</div>
 </div>
 
-<input type="file" id="file" accept="image/*,video/*" hidden>
+<input type="file" id="file" hidden>
 
 <script>
-function openGallery(){
-  document.getElementById("file").click();
+let currentType="photo";
+
+function openGallery(type){
+  currentType=type;
+  const f=document.getElementById("file");
+  f.accept = type==="story" ? "image/*,video/*" : "image/*";
+  f.click();
 }
 
 function openCamera(){
@@ -166,6 +186,7 @@ document.getElementById("file").onchange=function(){
   const file=this.files[0];
   if(!file)return;
 
+  // FEED POST
   const post=document.createElement("div");
   post.className="post";
   post.innerHTML=`
@@ -174,7 +195,13 @@ document.getElementById("file").onchange=function(){
     <div class="post-actions">❤️ 💬 🔗</div>
   `;
   document.getElementById("feed").prepend(post);
-}
+
+  // ENABLE BOXES
+  const boxes = document.querySelectorAll(
+    currentType==="story" ? ".story-box" : ".photo-box"
+  );
+  boxes.forEach(b=>b.classList.remove("disabled"));
+};
 
 function searchUser(){
   const u=prompt("Enter User ID");
