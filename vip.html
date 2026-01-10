@@ -2,28 +2,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>VIP Mode</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{margin:0;font-family:Arial}
-.header{background:#c2185b;color:#fff;padding:14px;text-align:center}
-.box{margin:20px;padding:20px;background:#fde6ef;border-radius:14px;text-align:center}
-button{background:#c2185b;color:#fff;border:none;padding:10px 24px;border-radius:22px}
-</style>
+<title>VIP MODE</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="header">VIP MODE</div>
 
-<div class="box">
-<h3>VIP Features</h3>
-<p>Exclusive content & visibility</p>
-<button onclick="alert('Payment gateway later')">Upgrade</button>
+<div class="container">
+
+<div class="card">
+  <h3>VIP Features</h3>
+  <p>Exclusive content & visibility</p>
+  <button class="btn" onclick="upgrade()">Upgrade</button>
 </div>
 
-<div style="text-align:center">
-<button onclick="history.back()">← Back</button>
+<div class="back">
+  <button class="btn" onclick="history.back()">← Back</button>
 </div>
+
+</div>
+
+<script>
+function upgrade(){
+  alert("VIP upgrade coming soon");
+}
+</script>
 
 </body>
 </html>
