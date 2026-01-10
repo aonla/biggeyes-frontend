@@ -2,44 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>More | BiggEyes</title>
+<title>More</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;font-family:Arial;background:#fff}
-.header{background:#c2185b;color:#fff;padding:14px;text-align:center;font-size:22px}
-.list{padding:16px}
+body{margin:0;font-family:Arial}
+.header{background:#c2185b;color:#fff;padding:14px;text-align:center}
 .item{
-  background:#fde6ef;color:#c2185b;
-  padding:16px;margin-bottom:12px;
-  border-radius:14px;font-size:18px;
-  text-align:center;cursor:pointer
+margin:14px;
+padding:16px;
+background:#fde6ef;
+border-radius:14px;
+text-align:center;
+font-size:18px;
+cursor:pointer
 }
-.back{text-align:center;margin:20px}
-button{
-  background:#c2185b;color:#fff;border:none;
-  padding:10px 22px;border-radius:22px
-}
+button{background:#c2185b;color:#fff;border:none;padding:10px 24px;border-radius:22px}
 </style>
 </head>
 <body>
 
 <div class="header">More</div>
 
-<div class="list">
-  <div class="item" onclick="go('best.html')">⭐ BEST</div>
-  <div class="item" onclick="go('vip.html')">💎 VIP MODE</div>
-  <div class="item" onclick="go('follow.html')">👥 FOLLOW</div>
-  <div class="item" onclick="go('saved.html')">❤️ MANPASAND</div>
-  <div class="item" onclick="go('settings.html')">⚙ SETTINGS</div>
-</div>
+<div class="item" onclick="location.href='best.html'">⭐ BEST</div>
+<div class="item" onclick="location.href='vip.html'">💎 VIP MODE</div>
+<div class="item" onclick="location.href='follow.html'">👥 FOLLOW</div>
+<div class="item" onclick="location.href='saved.html'">❤️ MANPASAND</div>
+<div class="item" onclick="alert('Settings coming soon')">⚙ SETTINGS</div>
 
-<div class="back">
-  <button onclick="history.back()">⬅ Back</button>
+<div style="text-align:center;margin-top:20px">
+<button onclick="history.back()">← Back</button>
 </div>
-
-<script>
-function go(p){ location.href=p; }
-</script>
 
 </body>
 </html>
