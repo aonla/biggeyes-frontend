@@ -2,38 +2,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Follow</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{margin:0;font-family:Arial}
-.header{background:#c2185b;color:#fff;padding:14px;text-align:center}
-.user{padding:12px;border-bottom:1px solid #eee}
-button{background:#c2185b;color:#fff;border:none;padding:6px 14px;border-radius:18px}
-</style>
+<title>Friends & Follow</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">Following</div>
+<div class="header">Friends & Follow</div>
 
-<div id="users"></div>
+<div class="container">
 
-<div style="text-align:center;margin:20px">
-<button onclick="history.back()">← Back</button>
+<div class="card">
+  <div class="row">
+    <button class="btn">Friends</button>
+    <button class="btn-outline btn">Following</button>
+    <button class="btn-outline btn">Requests</button>
+  </div>
 </div>
 
-<script>
-fetch("https://biggeyes.onrender.com/api/user/following",{
-headers:{Authorization:"Bearer "+localStorage.getItem("token")}
-})
-.then(r=>r.json())
-.then(d=>{
- if(!d.length){users.innerHTML="No following";}
- d.forEach(u=>{
-  users.innerHTML+=`<div class="user">@${u.name}</div>`;
- });
-})
-.catch(()=>users.innerHTML="<div class='user'>Demo User</div>");
-</script>
+<div class="card">
+  <b>@pramila</b><br>
+  Digital creator · Lucknow<br><br>
+  <button class="btn">Friend</button>
+  <button class="btn-outline btn">Following</button>
+</div>
 
+<div class="card">
+  <b>@biggeyes</b><br>
+  Official updates<br><br>
+  <button class="btn">Friend</button>
+  <button class="btn-outline btn">Following</button>
+</div>
+
+<div class="card">
+  <input placeholder="BiggEyes ID" style="width:100%;padding:10px;border-radius:20px;border:1px solid #ccc">
+  <br><br>
+  <button class="btn">Add Friend</button>
+</div>
+
+<div class="back">
+  <button class="btn" onclick="history.back()">← Home</button>
+</div>
+
+</div>
 </body>
 </html>
