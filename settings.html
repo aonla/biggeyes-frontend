@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Settings</title>
-<link rel="stylesheet" href="style.css">
+<style>
+body{font-family:Arial;background:#fff;margin:0}
+.header{background:#c2185b;color:white;text-align:center;padding:15px;font-size:20px}
+.item{
+ background:#fde4ec;
+ margin:15px;
+ padding:18px;
+ border-radius:15px;
+ text-align:center;
+ font-size:16px;
+}
+.btn{
+ background:#c2185b;
+ color:white;
+ border:none;
+ padding:12px 30px;
+ border-radius:25px;
+ font-size:16px;
+ margin:25px auto;
+ display:block;
+}
+</style>
 </head>
 <body>
 
 <div class="header">Settings</div>
 
-<div class="container">
+<div class="item">Edit Profile</div>
+<div class="item">Change Password</div>
+<div class="item">Privacy Policy</div>
+<div class="item">Logout</div>
 
-<div class="card">
-  <h3>Profile & ID</h3>
-  Email: user@gmail.com<br>
-  BiggEyes ID: @username<br><br>
-  <button class="btn-outline btn">Edit Name</button>
-  <button class="btn-outline btn">Change Photo</button>
-</div>
+<button class="btn" onclick="history.back()">← Back</button>
 
-<div class="card">
-  <h3>Wallet</h3>
-  Balance: ₹0<br><br>
-  <button class="btn">+ ₹10 demo</button>
-  <button class="btn-outline btn">Reset</button>
-</div>
-
-<div class="card">
-  <h3>Games</h3>
-  <button class="btn">Sky Runner</button><br><br>
-  <button class="btn">Balloon Pop</button>
-</div>
-
-<div class="back">
-  <button class="btn" onclick="history.back()">← Back</button>
-</div>
-
-</div>
 </body>
 </html>
