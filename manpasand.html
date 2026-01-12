@@ -1,16 +1,72 @@
-<div id="saved"></div>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Manpasand</title>
+
+<style>
+body{font-family:Arial;background:#fff;margin:0}
+.header{background:#c2185b;color:white;text-align:center;padding:15px;font-size:20px}
+.card{
+ background:#fde4ec;
+ margin:20px;
+ padding:30px;
+ border-radius:20px;
+ text-align:center;
+ font-size:18px;
+}
+.btn{
+ background:#c2185b;
+ color:white;
+ border:none;
+ padding:12px 30px;
+ border-radius:25px;
+ font-size:16px;
+ margin:30px auto;
+ display:block;
+}
+</style>
+</head>
+<body>
 
 <script>
-async function loadSaved(){
-  const res = await fetch(API + "/api/saved", { credentials:"include" });
-  const posts = await res.json();
-
-  let html = "";
-  posts.forEach(p=>{
-    html += `<div class="card">${p.title}</div>`;
-  });
-
-  document.getElementById("saved").innerHTML = html;
+/* 🔐 AUTH */
+const token = localStorage.getItem("token");
+if(!token){
+  location.replace("login.html");
 }
-loadSaved();
+const API = "https://biggeyes-backend.onrender.com";
+
+/* ❤️ LOAD SAVED */
+fetch(API + "/api/post/saved",{
+  headers:{ "Authorization":"Bearer " + token }
+})
+.then(r=>r.json())
+.then(d=>{
+  const box = document.getElementById("saved");
+  box.innerHTML = "";
+
+  if(!d.posts || d.posts.length===0){
+    box.innerHTML = "No saved posts";
+    return;
+  }
+
+  d.posts.forEach(p=>{
+    const div = document.createElement("div");
+    div.className="card";
+    div.innerText = p.title || "Saved Post";
+    box.appendChild(div);
+  });
+})
+.catch(()=>alert("Server error"));
 </script>
+
+<div class="header">Manpasand</div>
+
+<div id="saved">
+  <div class="card">Loading...</div>
+</div>
+
+<button class="btn" onclick="history.back()">← Back</button>
+
+</body>
+</html>
