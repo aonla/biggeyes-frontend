@@ -1,36 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Manpasand</title>
-<style>
-body{font-family:Arial;background:#fff;margin:0}
-.header{background:#c2185b;color:white;text-align:center;padding:15px;font-size:20px}
-.card{
- background:#fde4ec;
- margin:30px;
- padding:40px;
- border-radius:20px;
- text-align:center;
- font-size:18px;
+<div id="saved"></div>
+
+<script>
+async function loadSaved(){
+  const res = await fetch(API + "/api/saved", { credentials:"include" });
+  const posts = await res.json();
+
+  let html = "";
+  posts.forEach(p=>{
+    html += `<div class="card">${p.title}</div>`;
+  });
+
+  document.getElementById("saved").innerHTML = html;
 }
-.btn{
- background:#c2185b;
- color:white;
- border:none;
- padding:12px 30px;
- border-radius:25px;
- font-size:16px;
- margin-top:30px;
-}
-</style>
-</head>
-<body>
-
-<div class="header">Manpasand</div>
-
-<div class="card">Saved Post</div>
-
-<button class="btn" onclick="history.back()">← Back</button>
-
-</body>
-</html>
+loadSaved();
+</script>
