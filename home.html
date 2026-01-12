@@ -41,7 +41,6 @@ body{margin:0;background:#fff}
   width:130px;height:130px;border-radius:50%;
   background:var(--light);border:5px solid var(--pink);
   margin:0 auto;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
 }
 .user-id{color:var(--pink);margin:6px 0}
 .action-row{display:flex;justify-content:center;gap:8px;margin:4px 0;flex-wrap:wrap}
@@ -60,12 +59,7 @@ body{margin:0;background:#fff}
   font-size:14px;
   cursor:pointer;
 }
-
-/* disabled look */
-.disabled{
-  opacity:.4;
-  pointer-events:none;
-}
+.disabled{opacity:.4;pointer-events:none}
 
 /* FEED */
 .feed{padding:8px 16px}
@@ -75,8 +69,13 @@ body{margin:0;background:#fff}
 }
 .post-header{padding:10px;font-weight:bold;color:var(--pink)}
 .post-media{
-  height:220px;background:var(--light);
+  background:var(--light);
   display:flex;align-items:center;justify-content:center;
+}
+.post-media img,
+.post-media video{
+  width:100%;
+  display:block;
 }
 .post-actions{padding:8px 10px;display:flex;gap:14px;font-size:18px}
 
@@ -123,7 +122,8 @@ if(!localStorage.getItem("token")){
 
 <!-- PROFILE -->
 <div class="profile">
-  <div class="profile-circle" onclick="goPage('profile.html')">Profile</div>
+  <!-- ❌ profile.html hata diya → redirect bug fix -->
+  <div class="profile-circle" onclick="goPage('settings.html')">Profile</div>
   <div class="user-id" id="uid">@user</div>
 
   <div class="action-row">
@@ -132,7 +132,7 @@ if(!localStorage.getItem("token")){
     <button class="btn" onclick="followUser()">FOLLOW</button>
   </div>
   <div class="action-row">
-    <button class="btn" onclick="goPage('saved.html')">MANPASAND</button>
+    <button class="btn" onclick="goPage('manpasand.html')">MANPASAND</button>
     <button class="btn" onclick="goPage('more.html')">MORE</button>
   </div>
 </div>
@@ -140,7 +140,7 @@ if(!localStorage.getItem("token")){
 <!-- STORY -->
 <div class="line-section">
   <div class="line-title" onclick="openGallery('story')">Story</div>
-  <div class="line-scroll" id="storyRow">
+  <div class="line-scroll">
     <div class="story-box" onclick="openGallery('story')">Add</div>
     <div class="story-box disabled">Story</div>
     <div class="story-box disabled">Story</div>
@@ -150,7 +150,7 @@ if(!localStorage.getItem("token")){
 <!-- PHOTO -->
 <div class="line-section">
   <div class="line-title" onclick="openGallery('photo')">Photo</div>
-  <div class="line-scroll" id="photoRow">
+  <div class="line-scroll">
     <div class="photo-box" onclick="openGallery('photo')">Add</div>
     <div class="photo-box disabled">Photo</div>
     <div class="photo-box disabled">Photo</div>
@@ -168,7 +168,7 @@ if(!localStorage.getItem("token")){
   <div class="nav" onclick="location.href='home.html'">🏠</div>
   <div class="nav" onclick="goPage('best.html')">🔥</div>
   <div class="nav" onclick="searchUser()">🔍</div>
-  <div class="nav" onclick="goPage('profile.html')">👤</div>
+  <div class="nav" onclick="goPage('settings.html')">👤</div>
 </div>
 
 <input type="file" id="file" hidden>
@@ -188,23 +188,28 @@ function openGallery(type){
   f.click();
 }
 
-/* FILE UPLOAD PREVIEW */
+/* ✅ IMAGE / VIDEO PREVIEW FIX */
 document.getElementById("file").onchange=function(){
   const file=this.files[0];
-  if(!file)return;
+  if(!file) return;
 
+  const url = URL.createObjectURL(file);
   const post=document.createElement("div");
   post.className="post";
+
   post.innerHTML=`
     <div class="post-header">@You</div>
-    <div class="post-media">${file.name}</div>
+    <div class="post-media">
+      ${
+        file.type.startsWith("image")
+        ? `<img src="${url}">`
+        : `<video src="${url}" controls></video>`
+      }
+    </div>
     <div class="post-actions">❤️ 💬 🔗</div>
   `;
-  document.getElementById("feed").prepend(post);
 
-  document
-    .querySelectorAll(currentType==="story"?".story-box":".photo-box")
-    .forEach(b=>b.classList.remove("disabled"));
+  document.getElementById("feed").prepend(post);
 };
 
 /* SEARCH */
@@ -213,12 +218,11 @@ function searchUser(){
   if(u) alert("Searching: "+u);
 }
 
-/* FOLLOW (BACKEND READY) */
+/* FOLLOW */
 function followUser(){
   fetch(API+"/api/user/follow",{
     method:"POST",
     headers:{
-      "Content-Type":"application/json",
       "Authorization":"Bearer "+localStorage.getItem("token")
     }
   }).then(()=>alert("Followed"));
@@ -230,7 +234,9 @@ fetch(API+"/api/user/profile",{
 })
 .then(r=>r.json())
 .then(d=>{
-  if(d.email) document.getElementById("uid").innerText="@"+d.email.split("@")[0];
+  if(d.user?.email){
+    document.getElementById("uid").innerText="@"+d.user.email.split("@")[0];
+  }
 });
 
 /* LOGOUT */
