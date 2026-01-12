@@ -1,39 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>VIP Mode</title>
-<style>
-body{font-family:Arial;background:#fff;margin:0}
-.header{background:#c2185b;color:white;text-align:center;padding:15px;font-size:20px}
-.card{
- background:#fde4ec;
- margin:30px;
- padding:30px;
- border-radius:20px;
- text-align:center;
+<button onclick="upgradeVIP()">Upgrade</button>
+
+<script>
+const API = "https://biggeyes-backend.onrender.com";
+
+async function upgradeVIP(){
+  const res = await fetch(API + "/api/vip/upgrade", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+  });
+
+  const data = await res.json();
+  alert(data.message);
 }
-.btn{
- background:#c2185b;
- color:white;
- border:none;
- padding:12px 30px;
- border-radius:25px;
- font-size:16px;
-}
-.back{margin:20px auto;display:block}
-</style>
-</head>
-<body>
-
-<div class="header">VIP MODE</div>
-
-<div class="card">
-<h2>VIP Features</h2>
-<p>Exclusive content & visibility</p>
-<button class="btn">Upgrade</button>
-</div>
-
-<button class="btn back" onclick="history.back()">← Back</button>
-
-</body>
-</html>
+</script>
