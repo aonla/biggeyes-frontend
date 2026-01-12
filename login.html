@@ -22,8 +22,8 @@ button{
 }
 </style>
 
-<!-- ✅ Already login check -->
 <script>
+/* already logged-in guard */
 if (localStorage.getItem("token")) {
   window.location.replace("home.html");
 }
@@ -42,6 +42,8 @@ if (localStorage.getItem("token")) {
 <p id="msg"></p>
 
 <script>
+const API = "https://biggeyes-backend.onrender.com";
+
 async function login(){
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -49,21 +51,20 @@ async function login(){
   document.getElementById("msg").innerText = "Logging in...";
 
   try{
-    const res = await fetch("https://biggeyes.onrender.com/api/auth/login",{
+    const res = await fetch(API + "/api/auth/login",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
+      headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ email, password })
     });
 
     const data = await res.json();
-    document.getElementById("msg").innerText = data.message;
+    document.getElementById("msg").innerText = data.message || "";
 
-    if(data.success){
+    if(data.success && data.token){
+      /* 🔥 MOST IMPORTANT FIX */
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      // 🔥 FAST + CLEAN redirect
       window.location.replace("home.html");
     }
 
