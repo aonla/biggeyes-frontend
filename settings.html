@@ -1,16 +1,78 @@
-<button onclick="saveSettings()">Save</button>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Settings</title>
+
+<style>
+body{font-family:Arial;background:#fff;margin:0}
+.header{background:#c2185b;color:white;text-align:center;padding:15px;font-size:20px}
+.item{
+ background:#fde4ec;
+ margin:15px;
+ padding:18px;
+ border-radius:15px;
+ text-align:center;
+ font-size:16px;
+ cursor:pointer;
+}
+.btn{
+ background:#c2185b;
+ color:white;
+ border:none;
+ padding:12px 30px;
+ border-radius:25px;
+ font-size:16px;
+ margin:25px auto;
+ display:block;
+}
+</style>
+</head>
+<body>
 
 <script>
-async function saveSettings(){
-  const username = document.getElementById("username").value;
+/* 🔐 AUTH GUARD */
+const token = localStorage.getItem("token");
+if(!token){
+  location.replace("login.html");
+}
+const API = "https://biggeyes-backend.onrender.com";
+</script>
 
-  await fetch(API + "/api/settings",{
+<div class="header">Settings</div>
+
+<div class="item" onclick="editProfile()">Edit Profile</div>
+<div class="item" onclick="changePassword()">Change Password</div>
+<div class="item" onclick="privacy()">Privacy Policy</div>
+<div class="item" onclick="logout()">Logout</div>
+
+<button class="btn" onclick="history.back()">← Back</button>
+
+<script>
+function editProfile(){
+  alert("Profile edit (next step)");
+}
+
+function changePassword(){
+  alert("Password change (next step)");
+}
+
+function privacy(){
+  alert("Privacy policy page (static)");
+}
+
+/* 🔥 REAL LOGOUT */
+function logout(){
+  fetch(API + "/api/auth/logout",{
     method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    credentials:"include",
-    body: JSON.stringify({ username })
+    headers:{
+      "Authorization":"Bearer " + token
+    }
+  }).finally(()=>{
+    localStorage.clear();
+    location.replace("login.html");
   });
-
-  alert("Settings saved");
 }
 </script>
+
+</body>
+</html>
