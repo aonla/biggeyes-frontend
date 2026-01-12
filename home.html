@@ -15,7 +15,7 @@ body{margin:0;background:#fff}
 
 /* HEADER */
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
-.logo{font-size:34px;font-weight:900;color:var(--pink)}
+.logo{font-size:30px;font-weight:900;color:var(--pink)}
 .header-icons{display:flex;gap:10px}
 .h-icon{
   width:36px;height:36px;border-radius:50%;
@@ -24,7 +24,7 @@ body{margin:0;background:#fff}
   cursor:pointer;
 }
 
-/* LEFT ACTIONS */
+/* PASS / MENU */
 .left-actions{position:absolute;left:16px;top:72px}
 .pass-line{display:flex;align-items:center;gap:6px}
 .pass-dot{width:12px;height:12px;border:2px solid var(--pink);border-radius:50%}
@@ -38,7 +38,7 @@ body{margin:0;background:#fff}
 /* PROFILE */
 .profile{text-align:center;margin-top:28px}
 .profile-circle{
-  width:140px;height:140px;border-radius:50%;
+  width:130px;height:130px;border-radius:50%;
   background:var(--light);border:5px solid var(--pink);
   margin:0 auto;display:flex;align-items:center;justify-content:center;
   cursor:pointer;
@@ -48,19 +48,24 @@ body{margin:0;background:#fff}
 
 /* STORY / PHOTO */
 .line-section{display:flex;align-items:center;gap:8px;padding:6px 16px}
-.line-title{min-width:60px;color:var(--pink);font-size:20px;cursor:pointer}
+.line-title{min-width:52px;color:var(--pink);font-size:20px;cursor:pointer}
 .line-scroll{display:flex;gap:10px;overflow-x:auto;flex:1}
 
 /* BOXES */
 .story-box,.photo-box{
-  min-width:86px;height:86px;
+  min-width:78px;height:78px;
   background:var(--pink);
-  border-radius:14px;color:#fff;
+  border-radius:12px;color:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:14px;
   cursor:pointer;
 }
-.disabled{opacity:.4;pointer-events:none}
+
+/* disabled look */
+.disabled{
+  opacity:.4;
+  pointer-events:none;
+}
 
 /* FEED */
 .feed{padding:8px 16px}
@@ -75,7 +80,10 @@ body{margin:0;background:#fff}
 }
 .post-actions{padding:8px 10px;display:flex;gap:14px;font-size:18px}
 
-/* BOTTOM */
+/* LOGOUT */
+.logout{text-align:center;margin:10px 0 70px}
+
+/* BOTTOM NAV */
 .bottom-nav{
   position:fixed;bottom:0;left:0;right:0;height:56px;
   background:#fff;border-top:1px solid #eee;
@@ -87,14 +95,14 @@ body{margin:0;background:#fff}
 
 <body>
 
+<!-- 🔐 TOKEN GUARD -->
 <script>
-/* 🔐 AUTH GUARD */
-const token = localStorage.getItem("token");
-if(!token){
+if(!localStorage.getItem("token")){
   location.replace("login.html");
 }
 </script>
 
+<!-- HEADER -->
 <div class="header">
   <div class="logo">BiggEyes</div>
   <div class="header-icons">
@@ -104,6 +112,7 @@ if(!token){
   </div>
 </div>
 
+<!-- PASS / MENU -->
 <div class="left-actions">
   <div class="pass-line">
     <div class="pass-dot"></div>
@@ -112,6 +121,7 @@ if(!token){
   <button class="btn menu-btn" onclick="goPage('more.html')">☰ MENU</button>
 </div>
 
+<!-- PROFILE -->
 <div class="profile">
   <div class="profile-circle" onclick="goPage('profile.html')">Profile</div>
   <div class="user-id" id="uid">@user</div>
@@ -127,21 +137,32 @@ if(!token){
   </div>
 </div>
 
+<!-- STORY -->
 <div class="line-section">
   <div class="line-title" onclick="openGallery('story')">Story</div>
-  <div class="line-scroll">
+  <div class="line-scroll" id="storyRow">
     <div class="story-box" onclick="openGallery('story')">Add</div>
+    <div class="story-box disabled">Story</div>
+    <div class="story-box disabled">Story</div>
   </div>
 </div>
 
+<!-- PHOTO -->
 <div class="line-section">
   <div class="line-title" onclick="openGallery('photo')">Photo</div>
-  <div class="line-scroll">
+  <div class="line-scroll" id="photoRow">
     <div class="photo-box" onclick="openGallery('photo')">Add</div>
+    <div class="photo-box disabled">Photo</div>
+    <div class="photo-box disabled">Photo</div>
   </div>
 </div>
 
+<!-- FEED -->
 <div class="feed" id="feed"></div>
+
+<div class="logout">
+  <button class="btn" onclick="logout()">Logout</button>
+</div>
 
 <div class="bottom-nav">
   <div class="nav" onclick="location.href='home.html'">🏠</div>
@@ -153,11 +174,13 @@ if(!token){
 <input type="file" id="file" hidden>
 
 <script>
-const API = "https://biggeyes-backend.onrender.com";
+const API="https://biggeyes.onrender.com";
 let currentType="photo";
 
+/* NAV */
 function goPage(p){ location.href=p; }
 
+/* GALLERY */
 function openGallery(type){
   currentType=type;
   const f=document.getElementById("file");
@@ -165,6 +188,7 @@ function openGallery(type){
   f.click();
 }
 
+/* FILE UPLOAD PREVIEW */
 document.getElementById("file").onchange=function(){
   const file=this.files[0];
   if(!file)return;
@@ -177,33 +201,43 @@ document.getElementById("file").onchange=function(){
     <div class="post-actions">❤️ 💬 🔗</div>
   `;
   document.getElementById("feed").prepend(post);
+
+  document
+    .querySelectorAll(currentType==="story"?".story-box":".photo-box")
+    .forEach(b=>b.classList.remove("disabled"));
 };
 
+/* SEARCH */
 function searchUser(){
   const u=prompt("Enter User ID");
   if(u) alert("Searching: "+u);
 }
 
+/* FOLLOW (BACKEND READY) */
 function followUser(){
   fetch(API+"/api/user/follow",{
     method:"POST",
     headers:{
-      "Authorization":"Bearer "+token
+      "Content-Type":"application/json",
+      "Authorization":"Bearer "+localStorage.getItem("token")
     }
   }).then(()=>alert("Followed"));
 }
 
-/* 🔥 PROFILE LOAD (WORKING TOKEN) */
+/* PROFILE LOAD */
 fetch(API+"/api/user/profile",{
-  headers:{ "Authorization":"Bearer "+token }
+  headers:{Authorization:"Bearer "+localStorage.getItem("token")}
 })
 .then(r=>r.json())
 .then(d=>{
-  if(d.user && d.user.email){
-    document.getElementById("uid").innerText =
-      "@"+d.user.email.split("@")[0];
-  }
+  if(d.email) document.getElementById("uid").innerText="@"+d.email.split("@")[0];
 });
+
+/* LOGOUT */
+function logout(){
+  localStorage.clear();
+  location.href="login.html";
+}
 </script>
 
 </body>
