@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Profile & ID</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fde6ef;
+}
+.container{
+  padding:16px;
+}
+.card{
+  background:#ffe9f1;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+}
+h2{
+  margin-top:0;
+  color:#c2185b;
+}
+p{margin:6px 0;}
+.btn{
+  border:2px solid #c2185b;
+  background:#fff;
+  color:#c2185b;
+  padding:8px 16px;
+  border-radius:22px;
+  margin:6px;
+  cursor:pointer;
+}
+.btn-fill{
+  background:#c2185b;
+  color:#fff;
+}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:22px;
+  border:2px solid #f3b5cc;
+  outline:none;
+}
+.small{
+  font-size:14px;
+  color:#555;
+}
+.vip{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.toggle{
+  background:#c2185b;
+  color:#fff;
+  border:none;
+  padding:10px 20px;
+  border-radius:25px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- PROFILE -->
+<div class="card">
+  <h2>Profile & ID</h2>
+  <p><b>Email:</b> pramodverma395@gmail.com</p>
+  <p><b>BiggEyes ID:</b> @pramodaonla</p>
+  <p><b>नाम:</b> pramodaonla</p>
+  <p class="small">Profile link: https://biggeyes.app/pramodaonla</p>
+
+  <button class="btn">नाम बदलें</button>
+  <button class="btn">BiggEyes ID बदलें</button><br>
+  <button class="btn">Profile photo बदलें</button>
+  <button class="btn">Link copy</button>
+
+  <p class="small">
+    ये changes future backend में save होंगे (full_name, handle, avatar_url)
+  </p>
+</div>
+
+<!-- FRIEND LIST -->
+<div class="card">
+  <h2>Friend list</h2>
+  <p class="small">
+    Future version में यहीं से real Friend / Block system जुड़ेगा.
+  </p>
+
+  <input placeholder="@friendid या नाम">
+  <br><br>
+  <button class="btn-fill">Friend add (demo)</button>
+
+  <p class="small">अभी कोई friend नहीं जोड़ा (demo).</p>
+</div>
+
+<!-- VIP MODE -->
+<div class="card">
+  <h2>VIP MODE <span style="color:green">ON</span></h2>
+  <p class="small">
+    VIP mode on रहने पर future rules के हिसाब से
+    कोई भी user आपको block नहीं कर सकेगा (concept).
+  </p>
+  <button class="toggle">VIP MODE toggle</button>
+</div>
+
+</div>
+</body>
+</html>
