@@ -20,6 +20,9 @@ button{
   border:none;
   border-radius:25px;
 }
+#msg{
+  min-height:20px;
+}
 </style>
 
 <script>
@@ -42,34 +45,48 @@ if (localStorage.getItem("token")) {
 <p id="msg"></p>
 
 <script>
-const API = "https://biggeyes-backend.onrender.com";
+/* 🔴 IMPORTANT: CORRECT BACKEND URL */
+const API = "https://biggeyes.onrender.com";
 
 async function login(){
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
 
-  document.getElementById("msg").innerText = "Logging in...";
+  if(!email || !password){
+    msg.innerText = "Email aur password dono bharo";
+    return;
+  }
+
+  msg.innerText = "Logging in...";
 
   try{
+    console.log("➡️ Sending login request");
+
     const res = await fetch(API + "/api/auth/login",{
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ email, password })
     });
 
+    console.log("⬅️ Response status:", res.status);
+
     const data = await res.json();
-    document.getElementById("msg").innerText = data.message || "";
+    console.log("⬅️ Response data:", data);
+
+    msg.innerText = data.message || "No message";
 
     if(data.success && data.token){
-      /* 🔥 MOST IMPORTANT FIX */
+      /* ✅ TOKEN SAVE */
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
 
+      console.log("✅ Token saved, redirecting...");
       window.location.replace("home.html");
     }
 
   }catch(err){
-    document.getElementById("msg").innerText = "Server error, try again";
+    console.error("❌ Fetch error:", err);
+    msg.innerText = "Server error, try again";
   }
 }
 </script>
