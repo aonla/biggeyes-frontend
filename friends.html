@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Friends & Follow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fde6ef;
+}
+.header{
+  padding:16px;
+  text-align:center;
+  color:#c2185b;
+  font-size:22px;
+  font-weight:bold;
+}
+.container{padding:16px;}
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+.tab{
+  flex:1;
+  padding:10px;
+  border-radius:25px;
+  border:2px solid #c2185b;
+  text-align:center;
+  color:#c2185b;
+}
+.active{
+  background:#c2185b;
+  color:#fff;
+}
+.card{
+  background:#ffe9f1;
+  border-radius:16px;
+  padding:12px;
+  margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.name{
+  color:#c2185b;
+  font-weight:bold;
+}
+.small{font-size:14px;color:#555;}
+.btn{
+  background:#c2185b;
+  color:#fff;
+  border:none;
+  padding:6px 14px;
+  border-radius:20px;
+  margin-left:6px;
+}
+.btn-outline{
+  background:#fff;
+  color:#c2185b;
+  border:2px solid #c2185b;
+}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:22px;
+  border:2px solid #f3b5cc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Friends & Follow</div>
+
+<div class="container">
+
+<div class="tabs">
+  <div class="tab active">Friends</div>
+  <div class="tab">Following</div>
+  <div class="tab">Requests</div>
+</div>
+
+<p class="small">
+  नीचे demo profiles दिख रहे हैं – बाद में backend से आएंगे.
+</p>
+
+<div class="card">
+  <div>
+    <div class="name">@pramila</div>
+    <div class="small">Digital creator · Lucknow</div>
+  </div>
+  <div>
+    <button class="btn">Friend</button>
+    <button class="btn">Following</button>
+  </div>
+</div>
+
+<div class="card">
+  <div>
+    <div class="name">@pramod</div>
+    <div class="small">Video editor · UP</div>
+  </div>
+  <div>
+    <button class="btn">Friend</button>
+    <button class="btn">Following</button>
+  </div>
+</div>
+
+<div class="card">
+  <div>
+    <div class="name">@biggeyes</div>
+    <div class="small">Official updates</div>
+  </div>
+  <div>
+    <button class="btn">Friend</button>
+    <button class="btn">Following</button>
+  </div>
+</div>
+
+<h3 style="color:#c2185b">Add friend by ID</h3>
+
+<input placeholder="BiggEyes ID (without @)">
+<br><br>
+<button class="btn">Add friend</button>
+
+</div>
+</body>
+</html>
