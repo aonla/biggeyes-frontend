@@ -41,6 +41,7 @@ body{margin:0;background:#fff}
   width:130px;height:130px;border-radius:50%;
   background:var(--light);border:5px solid var(--pink);
   margin:0 auto;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
 }
 .user-id{color:var(--pink);margin:6px 0}
 .action-row{display:flex;justify-content:center;gap:8px;margin:4px 0;flex-wrap:wrap}
@@ -68,15 +69,9 @@ body{margin:0;background:#fff}
   margin-bottom:14px;overflow:hidden;
 }
 .post-header{padding:10px;font-weight:bold;color:var(--pink)}
-.post-media{
-  background:var(--light);
-  display:flex;align-items:center;justify-content:center;
-}
+.post-media{background:var(--light)}
 .post-media img,
-.post-media video{
-  width:100%;
-  display:block;
-}
+.post-media video{width:100%;display:block}
 .post-actions{padding:8px 10px;display:flex;gap:14px;font-size:18px}
 
 /* LOGOUT */
@@ -122,18 +117,14 @@ if(!localStorage.getItem("token")){
 
 <!-- PROFILE -->
 <div class="profile">
-  <!-- ❌ profile.html hata diya → redirect bug fix -->
-  <div class="profile-circle" onclick="goPage('settings.html')">Profile</div>
+  <!-- ✅ NOW OPENS NEW profile.html -->
+  <div class="profile-circle" onclick="goPage('profile.html')">Profile</div>
   <div class="user-id" id="uid">@user</div>
 
   <div class="action-row">
     <button class="btn" onclick="goPage('best.html')">BEST</button>
     <button class="btn" onclick="goPage('vip.html')">VIP MODE</button>
-    <button class="btn" onclick="followUser()">FOLLOW</button>
-  </div>
-  <div class="action-row">
-    <button class="btn" onclick="goPage('manpasand.html')">MANPASAND</button>
-    <button class="btn" onclick="goPage('more.html')">MORE</button>
+    <button class="btn" onclick="goPage('friends.html')">FRIENDS</button>
   </div>
 </div>
 
@@ -143,7 +134,6 @@ if(!localStorage.getItem("token")){
   <div class="line-scroll">
     <div class="story-box" onclick="openGallery('story')">Add</div>
     <div class="story-box disabled">Story</div>
-    <div class="story-box disabled">Story</div>
   </div>
 </div>
 
@@ -152,7 +142,6 @@ if(!localStorage.getItem("token")){
   <div class="line-title" onclick="openGallery('photo')">Photo</div>
   <div class="line-scroll">
     <div class="photo-box" onclick="openGallery('photo')">Add</div>
-    <div class="photo-box disabled">Photo</div>
     <div class="photo-box disabled">Photo</div>
   </div>
 </div>
@@ -164,11 +153,12 @@ if(!localStorage.getItem("token")){
   <button class="btn" onclick="logout()">Logout</button>
 </div>
 
+<!-- ✅ BOTTOM NAV FIXED -->
 <div class="bottom-nav">
-  <div class="nav" onclick="location.href='home.html'">🏠</div>
-  <div class="nav" onclick="goPage('best.html')">🔥</div>
+  <div class="nav" onclick="goPage('home.html')">🏠</div>
+  <div class="nav" onclick="goPage('friends.html')">👥</div>
   <div class="nav" onclick="searchUser()">🔍</div>
-  <div class="nav" onclick="goPage('settings.html')">👤</div>
+  <div class="nav" onclick="goPage('profile.html')">👤</div>
 </div>
 
 <input type="file" id="file" hidden>
@@ -177,10 +167,8 @@ if(!localStorage.getItem("token")){
 const API="https://biggeyes.onrender.com";
 let currentType="photo";
 
-/* NAV */
 function goPage(p){ location.href=p; }
 
-/* GALLERY */
 function openGallery(type){
   currentType=type;
   const f=document.getElementById("file");
@@ -188,47 +176,30 @@ function openGallery(type){
   f.click();
 }
 
-/* ✅ IMAGE / VIDEO PREVIEW FIX */
 document.getElementById("file").onchange=function(){
   const file=this.files[0];
   if(!file) return;
+  const url=URL.createObjectURL(file);
 
-  const url = URL.createObjectURL(file);
   const post=document.createElement("div");
   post.className="post";
-
   post.innerHTML=`
     <div class="post-header">@You</div>
     <div class="post-media">
-      ${
-        file.type.startsWith("image")
+      ${file.type.startsWith("image")
         ? `<img src="${url}">`
-        : `<video src="${url}" controls></video>`
-      }
+        : `<video src="${url}" controls></video>`}
     </div>
     <div class="post-actions">❤️ 💬 🔗</div>
   `;
-
   document.getElementById("feed").prepend(post);
 };
 
-/* SEARCH */
 function searchUser(){
   const u=prompt("Enter User ID");
   if(u) alert("Searching: "+u);
 }
 
-/* FOLLOW */
-function followUser(){
-  fetch(API+"/api/user/follow",{
-    method:"POST",
-    headers:{
-      "Authorization":"Bearer "+localStorage.getItem("token")
-    }
-  }).then(()=>alert("Followed"));
-}
-
-/* PROFILE LOAD */
 fetch(API+"/api/user/profile",{
   headers:{Authorization:"Bearer "+localStorage.getItem("token")}
 })
@@ -239,7 +210,6 @@ fetch(API+"/api/user/profile",{
   }
 });
 
-/* LOGOUT */
 function logout(){
   localStorage.clear();
   location.href="login.html";
