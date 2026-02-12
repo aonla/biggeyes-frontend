@@ -11,7 +11,12 @@
   --light:#fde6ef;
 }
 *{box-sizing:border-box;font-family:Arial}
-body{margin:0;background:#fff}
+
+/* ✅ SOFT BACKGROUND ADDED */
+body{
+  margin:0;
+  background:#C5CFDF;
+}
 
 /* HEADER */
 .header{
@@ -107,138 +112,4 @@ body{margin:0;background:#fff}
 .nav{font-size:22px;cursor:pointer}
 </style>
 </head>
-
 <body>
-
-<!-- 🔐 TOKEN GUARD -->
-<script>
-if(!localStorage.getItem("token")){
-  location.replace("login.html");
-}
-</script>
-
-<!-- HEADER -->
-<div class="header">
-  <div class="logo">BiggEyes</div>
-  <div class="header-icons">
-    <div class="h-icon" onclick="openGallery('story')">＋</div>
-    <div class="h-icon" onclick="openGallery('photo')">🖼</div>
-    <div class="h-icon" onclick="searchUser()">🔍</div>
-  </div>
-</div>
-
-<!-- PASS / MENU -->
-<div class="left-actions">
-  <div class="pass-line">
-    <div class="pass-dot"></div>
-    <button class="btn" onclick="goPage('best.html')">PASS</button>
-  </div>
-  <button class="btn menu-btn" onclick="goPage('more.html')">☰ MENU</button>
-</div>
-
-<!-- PROFILE -->
-<div class="profile">
-  <!-- ❌ click हटाया – profile only photo -->
-  <div class="profile-circle"></div>
-
-  <div class="user-id" id="uid">@user</div>
-
-  <div class="action-row">
-    <button class="btn" onclick="goPage('best.html')">BEST</button>
-    <button class="btn" onclick="goPage('vip.html')">VIP MODE</button>
-    <button class="btn" onclick="goPage('friends.html')">FRIENDS</button>
-  </div>
-</div>
-
-<!-- STORY + PHOTO CENTERED -->
-<div class="media-section">
-  <div class="media-col">
-    <h3 style="color:#c2185b">Story</h3>
-    <div class="media-grid">
-      <div class="box add" onclick="openGallery('story')">Add</div>
-      <div class="box disabled">Story</div>
-    </div>
-  </div>
-
-  <div class="media-col">
-    <h3 style="color:#c2185b">Photo</h3>
-    <div class="media-grid">
-      <div class="box add" onclick="openGallery('photo')">Add</div>
-      <div class="box disabled">Photo</div>
-    </div>
-  </div>
-</div>
-
-<div class="feed" id="feed"></div>
-
-<div class="logout">
-  <button class="btn" onclick="logout()">Logout</button>
-</div>
-
-<!-- BOTTOM NAV -->
-<div class="bottom-nav">
-  <div class="nav" onclick="goPage('home.html')">🏠</div>
-  <div class="nav" onclick="goPage('friends.html')">👥</div>
-  <div class="nav" onclick="searchUser()">🔍</div>
-  <!-- ✅ profile & id settings -->
-  <div class="nav" onclick="goPage('profile.html')">👤</div>
-</div>
-
-<input type="file" id="file" hidden>
-
-<script>
-const API="https://biggeyes.onrender.com";
-let currentType="photo";
-
-function goPage(p){location.href=p}
-
-function openGallery(type){
-  currentType=type;
-  const f=document.getElementById("file");
-  f.accept = type==="story" ? "image/*,video/*" : "image/*";
-  f.click();
-}
-
-document.getElementById("file").onchange=function(){
-  const file=this.files[0];
-  if(!file) return;
-  const url=URL.createObjectURL(file);
-
-  const post=document.createElement("div");
-  post.className="post";
-  post.innerHTML=`
-    <div class="post-header">@You</div>
-    <div class="post-media">
-      ${file.type.startsWith("image")
-        ? `<img src="${url}">`
-        : `<video src="${url}" controls></video>`}
-    </div>
-    <div class="post-actions">❤️ 💬 🔗</div>
-  `;
-  document.getElementById("feed").prepend(post);
-};
-
-function searchUser(){
-  const u=prompt("Enter User ID");
-  if(u) alert("Searching: "+u);
-}
-
-fetch(API+"/api/user/profile",{
-  headers:{Authorization:"Bearer "+localStorage.getItem("token")}
-})
-.then(r=>r.json())
-.then(d=>{
-  if(d.user?.email){
-    document.getElementById("uid").innerText =
-      "@"+d.user.email.split("@")[0];
-  }
-});
-
-function logout(){
-  localStorage.clear();
-  location.href="login.html";
-}
-</script>
-
-</body>
-</html>
