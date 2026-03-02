@@ -1,115 +1,204 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>BiggEyes Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-:root{
-  --pink:#c2185b;
-  --light:#fde6ef;
-}
-*{box-sizing:border-box;font-family:Arial}
-
-/* ✅ SOFT BACKGROUND ADDED */
-body{
-  margin:0;
-  background:#C5CFDF;
-}
-
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 16px
-}
-.logo{font-size:30px;font-weight:900;color:var(--pink)}
-.header-icons{display:flex;gap:10px}
-.h-icon{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--light);color:var(--pink);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-}
-
-/* PASS / MENU */
-.left-actions{position:absolute;left:16px;top:72px}
-.pass-line{display:flex;align-items:center;gap:6px}
-.pass-dot{width:12px;height:12px;border:2px solid var(--pink);border-radius:50%}
-.btn{
-  background:var(--pink);color:#fff;border:none;
-  padding:8px 18px;border-radius:22px;font-size:14px;
-  cursor:pointer;
-}
-.menu-btn{margin-top:6px}
-
-/* PROFILE */
-.profile{text-align:center;margin-top:28px}
-.profile-circle{
-  width:130px;height:130px;border-radius:50%;
-  background:var(--light);
-  border:5px solid var(--pink);
-  margin:0 auto;
-  background-image:url("https://via.placeholder.com/150");
-  background-size:cover;
-  background-position:center;
-}
-.user-id{color:var(--pink);margin:6px 0}
-.action-row{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:6px 0;
-  flex-wrap:wrap
-}
-
-/* STORY + PHOTO CENTER FIX */
-.media-section{
-  display:flex;
-  justify-content:center;
-  gap:40px;
-  margin:24px 0;
-}
-.media-col{text-align:center}
-.media-grid{
-  display:grid;
-  grid-template-columns:repeat(2,80px);
-  gap:12px;
-  justify-content:center;
-}
-.box{
-  width:80px;height:80px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:14px;
-  cursor:pointer;
-}
-.add{background:var(--pink)}
-.disabled{background:#f3b3cc}
-
-/* FEED */
-.feed{padding:8px 16px}
-
-/* LOGOUT */
-.logout{text-align:center;margin:20px 0 80px}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  height:56px;
-  background:#fff;
-  border-top:1px solid #eee;
-  display:flex;
-  justify-content:space-around;
-  align-items:center
-}
-.nav{font-size:22px;cursor:pointer}
-</style>
-</head>
-<body>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<title>BiggEyes Home</title>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <style>  
+:root{  
+  --pink:#c2185b;  
+  --light:#fde6ef;  
+}  
+*{box-sizing:border-box;font-family:Arial}  
+body{margin:0;background:#fff}  
+  
+/* HEADER */  
+.header{  
+  display:flex;  
+  justify-content:space-between;  
+  align-items:center;  
+  padding:12px 16px  
+}  
+.logo{font-size:30px;font-weight:900;color:var(--pink)}  
+.header-icons{display:flex;gap:10px}  
+.h-icon{  
+  width:36px;height:36px;border-radius:50%;  
+  background:var(--light);color:var(--pink);  
+  display:flex;align-items:center;justify-content:center;  
+  cursor:pointer;  
+}  
+  
+/* PASS / MENU */  
+.left-actions{position:absolute;left:16px;top:72px}  
+.pass-line{display:flex;align-items:center;gap:6px}  
+.pass-dot{width:12px;height:12px;border:2px solid var(--pink);border-radius:50%}  
+.btn{  
+  background:var(--pink);color:#fff;border:none;  
+  padding:8px 18px;border-radius:22px;font-size:14px;  
+  cursor:pointer;  
+}  
+.menu-btn{margin-top:6px}  
+  
+/* PROFILE */  
+.profile{text-align:center;margin-top:28px}  
+.profile-circle{  
+  width:130px;height:130px;border-radius:50%;  
+  background:var(--light);  
+  border:5px solid var(--pink);  
+  margin:0 auto;  
+  background-image:url("https://via.placeholder.com/150");  
+  background-size:cover;  
+  background-position:center;  
+}  
+.user-id{color:var(--pink);margin:6px 0}  
+.action-row{  
+  display:flex;  
+  justify-content:center;  
+  gap:8px;  
+  margin:6px 0;  
+  flex-wrap:wrap  
+}  
+  
+/* STORY + PHOTO CENTER FIX */  
+.media-section{  
+  display:flex;  
+  justify-content:center;  
+  gap:40px;  
+  margin:24px 0;  
+}  
+.media-col{text-align:center}  
+.media-grid{  
+  display:grid;  
+  grid-template-columns:repeat(2,80px);  
+  gap:12px;  
+  justify-content:center;  
+}  
+.box{  
+  width:80px;height:80px;  
+  border-radius:12px;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  color:#fff;  
+  font-size:14px;  
+  cursor:pointer;  
+}  
+.add{background:var(--pink)}  
+.disabled{background:#f3b3cc}  
+  
+/* FEED */  
+.feed{padding:8px 16px}  
+  
+/* LOGOUT */  
+.logout{text-align:center;margin:20px 0 80px}  
+  
+/* BOTTOM NAV */  
+.bottom-nav{  
+  position:fixed;  
+  bottom:0;left:0;right:0;  
+  height:56px;  
+  background:#fff;  
+  border-top:1px solid #eee;  
+  display:flex;  
+  justify-content:space-around;  
+  align-items:center  
+}  
+.nav{font-size:22px;cursor:pointer}  
+</style>  </head>  <body>  <!-- 🔐 TOKEN GUARD -->  <script>  
+if(!localStorage.getItem("token")){  
+  location.replace("login.html");  
+}  
+</script>  <!-- HEADER -->  <div class="header">  
+  <div class="logo">BiggEyes</div>  
+  <div class="header-icons">  
+    <div class="h-icon" onclick="openGallery('story')">＋</div>  
+    <div class="h-icon" onclick="openGallery('photo')">🖼</div>  
+    <div class="h-icon" onclick="searchUser()">🔍</div>  
+  </div>  
+</div>  <!-- PASS / MENU -->  <div class="left-actions">  
+  <div class="pass-line">  
+    <div class="pass-dot"></div>  
+    <button class="btn" onclick="goPage('best.html')">PASS</button>  
+  </div>  
+  <button class="btn menu-btn" onclick="goPage('more.html')">☰ MENU</button>  
+</div>  <!-- PROFILE -->  <div class="profile">  
+  <!-- ❌ click हटाया – profile only photo -->  
+  <div class="profile-circle"></div>    <div class="user-id" id="uid">@user</div>    <div class="action-row">  
+    <button class="btn" onclick="goPage('best.html')">BEST</button>  
+    <button class="btn" onclick="goPage('vip.html')">VIP MODE</button>  
+    <button class="btn" onclick="goPage('friends.html')">FRIENDS</button>  
+  </div>  
+</div>  <!-- STORY + PHOTO CENTERED -->  <div class="media-section">  
+  <div class="media-col">  
+    <h3 style="color:#c2185b">Story</h3>  
+    <div class="media-grid">  
+      <div class="box add" onclick="openGallery('story')">Add</div>  
+      <div class="box disabled">Story</div>  
+    </div>  
+  </div>    <div class="media-col">  
+    <h3 style="color:#c2185b">Photo</h3>  
+    <div class="media-grid">  
+      <div class="box add" onclick="openGallery('photo')">Add</div>  
+      <div class="box disabled">Photo</div>  
+    </div>  
+  </div>  
+</div>  <div class="feed" id="feed"></div>  <div class="logout">  
+  <button class="btn" onclick="logout()">Logout</button>  
+</div>  <!-- BOTTOM NAV -->  <div class="bottom-nav">  
+  <div class="nav" onclick="goPage('home.html')">🏠</div>  
+  <div class="nav" onclick="goPage('friends.html')">👥</div>  
+  <div class="nav" onclick="searchUser()">🔍</div>  
+  <!-- ✅ profile & id settings -->  
+  <div class="nav" onclick="goPage('profile.html')">👤</div>  
+</div>  <input type="file" id="file" hidden>  <script>  
+const API="https://biggeyes.onrender.com";  
+let currentType="photo";  
+  
+function goPage(p){location.href=p}  
+  
+function openGallery(type){  
+  currentType=type;  
+  const f=document.getElementById("file");  
+  f.accept = type==="story" ? "image/*,video/*" : "image/*";  
+  f.click();  
+}  
+  
+document.getElementById("file").onchange=function(){  
+  const file=this.files[0];  
+  if(!file) return;  
+  const url=URL.createObjectURL(file);  
+  
+  const post=document.createElement("div");  
+  post.className="post";  
+  post.innerHTML=`  
+    <div class="post-header">@You</div>  
+    <div class="post-media">  
+      ${file.type.startsWith("image")  
+        ? `<img src="${url}">`  
+        : `<video src="${url}" controls></video>`}  
+    </div>  
+    <div class="post-actions">❤️ 💬 🔗</div>  
+  `;  
+  document.getElementById("feed").prepend(post);  
+};  
+  
+function searchUser(){  
+  const u=prompt("Enter User ID");  
+  if(u) alert("Searching: "+u);  
+}  
+  
+fetch(API+"/api/user/profile",{  
+  headers:{Authorization:"Bearer "+localStorage.getItem("token")}  
+})  
+.then(r=>r.json())  
+.then(d=>{  
+  if(d.user?.email){  
+    document.getElementById("uid").innerText =  
+      "@"+d.user.email.split("@")[0];  
+  }  
+});  
+  
+function logout(){  
+  localStorage.clear();  
+  location.href="login.html";  
+}  
+</script>  </body>  
+</html>
