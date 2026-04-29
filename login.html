@@ -8,6 +8,7 @@
 body{
   text-align:center;
   font-family:sans-serif;
+  background:#fde6ef;
 }
 input,button{
   width:90%;
@@ -20,75 +21,154 @@ button{
   border:none;
   border-radius:25px;
 }
-#msg{
-  min-height:20px;
+.link{
+  color:#c2185b;
+  cursor:pointer;
+  margin:10px;
+  display:block;
 }
 </style>
-
-<script>
-/* already logged-in guard */
-if (localStorage.getItem("token")) {
-  window.location.replace("home.html");
-}
-</script>
 
 </head>
 <body>
 
-<h2>Login</h2>
+<h2 id="title">Login</h2>
 
+<input id="username" placeholder="Username (only register)" style="display:none">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
+<input id="otp" placeholder="OTP" style="display:none">
 
-<button onclick="login()">Login</button>
+<button onclick="action()" id="mainBtn">Login</button>
+
+<div class="link" onclick="switchMode('register')">Create Account</div>
+<div class="link" onclick="switchMode('forgot')">Forgot Password?</div>
 
 <p id="msg"></p>
 
 <script>
-/* 🔴 IMPORTANT: CORRECT BACKEND URL */
 const API = "https://biggeyes.onrender.com";
 
-async function login(){
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const msg = document.getElementById("msg");
+let mode = "login";
 
-  if(!email || !password){
-    msg.innerText = "Email aur password dono bharo";
-    return;
+function switchMode(m){
+  mode = m;
+
+  document.getElementById("msg").innerText = "";
+
+  document.getElementById("username").style.display = (m==="register") ? "block":"none";
+  document.getElementById("otp").style.display = (m==="verify" || m==="reset") ? "block":"none";
+
+  if(m==="login"){
+    title.innerText="Login";
+    mainBtn.innerText="Login";
   }
 
-  msg.innerText = "Logging in...";
+  if(m==="register"){
+    title.innerText="Register";
+    mainBtn.innerText="Send OTP";
+  }
 
-  try{
-    console.log("➡️ Sending login request");
+  if(m==="verify"){
+    title.innerText="Verify OTP";
+    mainBtn.innerText="Verify";
+  }
 
-    const res = await fetch(API + "/api/auth/login",{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ email, password })
-    });
+  if(m==="forgot"){
+    title.innerText="Forgot Password";
+    mainBtn.innerText="Send OTP";
+  }
 
-    console.log("⬅️ Response status:", res.status);
-
-    const data = await res.json();
-    console.log("⬅️ Response data:", data);
-
-    msg.innerText = data.message || "No message";
-
-    if(data.success && data.token){
-      /* ✅ TOKEN SAVE */
-      localStorage.setItem("token", data.token);
-
-      console.log("✅ Token saved, redirecting...");
-      window.location.replace("home.html");
-    }
-
-  }catch(err){
-    console.error("❌ Fetch error:", err);
-    msg.innerText = "Server error, try again";
+  if(m==="reset"){
+    title.innerText="Reset Password";
+    mainBtn.innerText="Reset";
   }
 }
+
+async function action(){
+
+  const email = emailInput();
+  const password = passInput();
+  const username = userInput();
+  const otp = otpInput();
+
+  msg.innerText="Processing...";
+
+  try{
+
+    let res, data;
+
+    if(mode==="login"){
+      res = await fetch(API+"/api/auth/login",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email,password})
+      });
+
+      data = await res.json();
+
+      if(data.success){
+        localStorage.setItem("token",data.token);
+        location.href="home.html";
+      }
+    }
+
+    if(mode==="register"){
+      res = await fetch(API+"/api/auth/register",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({username,email,password})
+      });
+
+      data = await res.json();
+      if(data.success) switchMode("verify");
+    }
+
+    if(mode==="verify"){
+      res = await fetch(API+"/api/auth/verify-otp",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email,otp})
+      });
+
+      data = await res.json();
+      if(data.success) switchMode("login");
+    }
+
+    if(mode==="forgot"){
+      res = await fetch(API+"/api/auth/forgot-password",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email})
+      });
+
+      data = await res.json();
+      if(data.success) switchMode("reset");
+    }
+
+    if(mode==="reset"){
+      res = await fetch(API+"/api/auth/reset-password",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email,otp,newPassword:password})
+      });
+
+      data = await res.json();
+      if(data.success) switchMode("login");
+    }
+
+    msg.innerText = data.message;
+
+  }catch(e){
+    msg.innerText="Server error";
+  }
+}
+
+function emailInput(){return document.getElementById("email").value}
+function passInput(){return document.getElementById("password").value}
+function userInput(){return document.getElementById("username").value}
+function otpInput(){return document.getElementById("otp").value}
+
 </script>
 
 </body>
