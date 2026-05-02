@@ -2,83 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>BiggEyes Auth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiggEyes Login</title>
 
 <style>
 body{
-  font-family:sans-serif;
-  background:#fde6ef;
+  margin:0;
+  font-family:Arial;
+  background:#fce4ec;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
-  margin:0;
 }
-
-.container{
-  width:90%;
-  max-width:400px;
-  background:white;
+.card{
+  background:#fff;
   padding:20px;
-  border-radius:16px;
-  box-shadow:0 0 10px rgba(0,0,0,0.1);
+  border-radius:20px;
+  width:90%;
+  max-width:350px;
   text-align:center;
 }
-
-h2{margin-bottom:10px;color:#c2185b}
+h2{color:#c2185b}
 
 input{
   width:100%;
   padding:12px;
   margin:8px 0;
-  border:1px solid #ccc;
   border-radius:10px;
+  border:1px solid #ccc;
 }
 
 button{
   width:100%;
   padding:12px;
-  margin-top:10px;
-  background:#c2185b;
-  color:white;
   border:none;
-  border-radius:25px;
-  cursor:pointer;
+  border-radius:20px;
+  background:#c2185b;
+  color:#fff;
+  margin-top:10px;
+  font-size:16px;
 }
 
 .link{
   color:#c2185b;
-  margin-top:8px;
-  cursor:pointer;
+  margin-top:10px;
   display:block;
+  cursor:pointer;
 }
-
-#msg{margin-top:10px}
 </style>
 </head>
 
 <body>
 
-<script>
-if(localStorage.getItem("token")){
-  location.replace("home.html");
-}
-</script>
-
-<div class="container">
+<div class="card">
 
 <h2 id="title">Login</h2>
 
-<input id="username" placeholder="Username" style="display:none">
+<input id="username" placeholder="Username (register only)">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
-<input id="otp" placeholder="OTP" style="display:none">
+<input id="otp" placeholder="OTP (if required)" style="display:none">
 
-<button onclick="mainAction()" id="mainBtn">Login</button>
+<button onclick="submit()">Continue</button>
 
-<div class="link" onclick="switchMode('register')">Create Account</div>
-<div class="link" onclick="switchMode('forgot')">Forgot Password?</div>
+<div class="link" onclick="toggle()">Create Account</div>
 
 <p id="msg"></p>
 
@@ -86,128 +74,65 @@ if(localStorage.getItem("token")){
 
 <script>
 const API="https://biggeyes.onrender.com";
-
 let mode="login";
 
-function switchMode(m){
-  mode=m;
-
-  document.getElementById("msg").innerText="";
-
-  if(m==="login"){
-    title.innerText="Login";
-    mainBtn.innerText="Login";
-    username.style.display="none";
-    otp.style.display="none";
-  }
-
-  if(m==="register"){
-    title.innerText="Register";
-    mainBtn.innerText="Send OTP";
-    username.style.display="block";
-    otp.style.display="none";
-  }
-
-  if(m==="verify"){
-    title.innerText="Verify OTP";
-    mainBtn.innerText="Verify";
-    otp.style.display="block";
-  }
-
-  if(m==="forgot"){
-    title.innerText="Reset Password";
-    mainBtn.innerText="Send OTP";
-    username.style.display="none";
-    otp.style.display="none";
-  }
+function toggle(){
+  mode = mode==="login" ? "register" : "login";
+  document.getElementById("title").innerText = mode==="login"?"Login":"Register";
+  document.getElementById("username").style.display = mode==="register"?"block":"none";
+  document.getElementById("otp").style.display="none";
 }
 
-async function mainAction(){
-  const email=emailInput();
-  const password=passwordInput();
-  const user=usernameInput();
-  const otpVal=otpInput();
+function submit(){
+  const email=document.getElementById("email").value;
+  const pass=document.getElementById("password").value;
+  const user=document.getElementById("username").value;
+  const otp=document.getElementById("otp").value;
 
-  msg.innerText="Processing...";
+  if(mode==="register"){
+    fetch(API+"/api/auth/register",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({username:user,email,password:pass})
+    })
+    .then(r=>r.json())
+    .then(d=>{
+      document.getElementById("msg").innerText="OTP sent";
+      document.getElementById("otp").style.display="block";
+      mode="verify";
+    });
+  }
 
-  try{
+  else if(mode==="verify"){
+    fetch(API+"/api/auth/verify-otp",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,otp})
+    })
+    .then(r=>r.json())
+    .then(d=>{
+      document.getElementById("msg").innerText="Verified! Now login";
+      mode="login";
+    });
+  }
 
-    if(mode==="login"){
-      const res=await fetch(API+"/api/auth/login",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email,password})
-      });
-
-      const data=await res.json();
-      msg.innerText=data.message;
-
-      if(data.success){
-        localStorage.setItem("token",data.token);
+  else{
+    fetch(API+"/api/auth/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,password:pass})
+    })
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.token){
+        localStorage.setItem("token",d.token);
         location.href="home.html";
+      }else{
+        document.getElementById("msg").innerText="Login failed";
       }
-    }
-
-    if(mode==="register"){
-      const res=await fetch(API+"/api/auth/register",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({username:user,email,password})
-      });
-
-      const data=await res.json();
-      msg.innerText=data.message;
-
-      if(data.success){
-        switchMode("verify");
-      }
-    }
-
-    if(mode==="verify"){
-      const res=await fetch(API+"/api/auth/verify",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email,otp:otpVal})
-      });
-
-      const data=await res.json();
-      msg.innerText=data.message;
-
-      if(data.success){
-        switchMode("login");
-      }
-    }
-
-    if(mode==="forgot"){
-      const res=await fetch(API+"/api/auth/forgot",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email})
-      });
-
-      const data=await res.json();
-      msg.innerText=data.message;
-
-      if(data.success){
-        switchMode("verify");
-      }
-    }
-
-  }catch(err){
-    msg.innerText="Server error";
+    });
   }
 }
-
-function emailInput(){return document.getElementById("email").value.trim()}
-function passwordInput(){return document.getElementById("password").value}
-function usernameInput(){return document.getElementById("username").value}
-function otpInput(){return document.getElementById("otp").value}
-
-const msg=document.getElementById("msg");
-const title=document.getElementById("title");
-const mainBtn=document.getElementById("mainBtn");
-const username=document.getElementById("username");
-const otp=document.getElementById("otp");
 </script>
 
 </body>
