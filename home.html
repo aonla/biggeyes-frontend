@@ -13,49 +13,46 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#f4f7fb;
+  background:#eef2f7;
 }
 
 /* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  padding:12px 16px;
+  padding:12px;
 }
 .logo{
-  font-size:28px;
-  font-weight:bold;
+  font-size:26px;
   color:var(--pink);
+  font-weight:bold;
 }
-.header-icons{
+.icons{
   display:flex;
   gap:10px;
 }
 .icon{
-  width:38px;height:38px;
-  border-radius:50%;
+  width:36px;height:36px;
   background:var(--light);
+  border-radius:50%;
   display:flex;
-  align-items:center;
   justify-content:center;
-  cursor:pointer;
+  align-items:center;
 }
 
-/* LEFT BUTTONS */
+/* LEFT */
 .left{
   position:absolute;
   top:70px;
-  left:12px;
+  left:10px;
 }
 .btn{
   background:var(--pink);
   color:#fff;
   border:none;
-  padding:8px 18px;
-  border-radius:22px;
+  padding:8px 16px;
+  border-radius:20px;
   margin-top:8px;
-  font-size:14px;
 }
 
 /* PROFILE */
@@ -63,21 +60,20 @@ body{
   text-align:center;
   margin-top:20px;
 }
-.profile-pic{
-  width:140px;
-  height:140px;
+.dp{
+  width:130px;
+  height:130px;
   border-radius:50%;
   border:5px solid var(--pink);
   margin:auto;
-  background:url("https://via.placeholder.com/150") center/cover;
+  background:#ddd;
 }
 .username{
   color:var(--pink);
-  margin:8px 0;
-  font-size:18px;
+  margin:6px;
 }
 
-/* BUTTON ROW */
+/* ROW */
 .row{
   display:flex;
   justify-content:center;
@@ -85,39 +81,24 @@ body{
   flex-wrap:wrap;
 }
 
-/* SECTION */
-.section{
-  padding:10px 14px;
-}
-.title{
-  color:var(--pink);
-  font-size:18px;
-  margin-bottom:8px;
-}
-
-/* SCROLL FIX */
+/* SCROLL */
 .scroll{
   display:flex;
   gap:10px;
   overflow-x:auto;
-  padding-bottom:6px;
+  padding:10px;
 }
-
-/* BOXES */
 .box{
   min-width:80px;
   height:80px;
-  border-radius:14px;
+  border-radius:12px;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   color:#fff;
-  font-size:14px;
 }
 .add{background:var(--pink);}
-.item{
-  background:#f3b3cc;
-}
+.item{background:#f3b3cc}
 
 /* FEED */
 .feed{
@@ -125,35 +106,22 @@ body{
 }
 .post{
   background:#fff;
-  border-radius:12px;
   margin-bottom:10px;
+  border-radius:10px;
   overflow:hidden;
 }
-.post img,.post video{
-  width:100%;
-}
+.post img,.post video{width:100%}
 
-/* LOGOUT */
-.logout{
-  text-align:center;
-  margin:20px;
-}
-
-/* BOTTOM NAV */
+/* BOTTOM */
 .bottom{
   position:fixed;
   bottom:0;
-  left:0;
-  right:0;
+  width:100%;
   height:55px;
   background:#fff;
   display:flex;
   justify-content:space-around;
   align-items:center;
-  border-top:1px solid #eee;
-}
-.nav{
-  font-size:22px;
 }
 </style>
 </head>
@@ -166,24 +134,21 @@ if(!localStorage.getItem("token")){
 }
 </script>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo">BiggEyes</div>
-  <div class="header-icons">
+  <div class="icons">
     <div class="icon" onclick="upload('story')">+</div>
     <div class="icon" onclick="upload('photo')">🖼</div>
   </div>
 </div>
 
-<!-- LEFT -->
 <div class="left">
   <button class="btn">PASS</button><br>
   <button class="btn">MENU</button>
 </div>
 
-<!-- PROFILE -->
 <div class="profile">
-  <div class="profile-pic" id="profilePic"></div>
+  <div class="dp" id="dp"></div>
   <div class="username" id="user">@user</div>
 
   <div class="row">
@@ -194,39 +159,30 @@ if(!localStorage.getItem("token")){
   </div>
 </div>
 
-<!-- STORY -->
-<div class="section">
-  <div class="title">Story</div>
-  <div class="scroll" id="storyBox">
-    <div class="box add" onclick="upload('story')">Add</div>
-  </div>
+<h3 style="padding-left:10px;color:#c2185b">Story</h3>
+<div class="scroll" id="story">
+  <div class="box add" onclick="upload('story')">Add</div>
 </div>
 
-<!-- PHOTO -->
-<div class="section">
-  <div class="title">Photo</div>
-  <div class="scroll" id="photoBox">
-    <div class="box add" onclick="upload('photo')">Add</div>
-  </div>
+<h3 style="padding-left:10px;color:#c2185b">Photo</h3>
+<div class="scroll" id="photo">
+  <div class="box add" onclick="upload('photo')">Add</div>
 </div>
 
-<!-- FEED -->
 <div class="feed" id="feed"></div>
 
-<div class="logout">
+<div style="text-align:center;margin:20px">
   <button class="btn" onclick="logout()">Logout</button>
 </div>
 
-<!-- BOTTOM -->
 <div class="bottom">
-  <div class="nav">🏠</div>
-  <div class="nav">🔍</div>
-  <div class="nav">👤</div>
+  🏠 🔍 👤
 </div>
 
 <input type="file" id="file" hidden>
 
 <script>
+const API="https://biggeyes.onrender.com";
 let type="photo";
 
 function upload(t){
@@ -236,46 +192,33 @@ function upload(t){
 
 document.getElementById("file").onchange=function(){
   const file=this.files[0];
-  if(!file) return;
-
   const url=URL.createObjectURL(file);
 
-  // PROFILE PIC SET
   if(type==="photo"){
-    document.getElementById("profilePic").style.background=`url(${url}) center/cover`;
+    document.getElementById("dp").style.background=`url(${url}) center/cover`;
   }
 
-  // STORY / PHOTO ADD
-  const div=document.createElement("div");
-  div.className="box item";
-  div.style.background=`url(${url}) center/cover`;
+  const box=document.createElement("div");
+  box.className="box item";
+  box.style.background=`url(${url}) center/cover`;
 
-  if(type==="story"){
-    document.getElementById("storyBox").appendChild(div);
-  }else{
-    document.getElementById("photoBox").appendChild(div);
-  }
+  document.getElementById(type).appendChild(box);
 
-  // FEED ADD
   const post=document.createElement("div");
   post.className="post";
-
-  if(file.type.startsWith("image")){
-    post.innerHTML=`<img src="${url}">`;
-  }else{
-    post.innerHTML=`<video src="${url}" controls></video>`;
-  }
+  post.innerHTML=file.type.startsWith("image")
+    ? `<img src="${url}">`
+    : `<video src="${url}" controls></video>`;
 
   document.getElementById("feed").prepend(post);
-};
+}
 
 function logout(){
   localStorage.clear();
   location.href="login.html";
 }
 
-// USER NAME
-fetch("https://biggeyes.onrender.com/api/user/profile",{
+fetch(API+"/api/user/profile",{
   headers:{Authorization:"Bearer "+localStorage.getItem("token")}
 })
 .then(r=>r.json())
