@@ -6,83 +6,148 @@
 <title>BiggEyes</title>
 
 <style>
+:root{
+  --pink:#c2185b;
+  --light:#fde6ef;
+}
 body{
   margin:0;
   font-family:Arial;
-  background:#e9edf5;
+  background:#f3f6fb;
 }
 
+/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
-  padding:15px;
+  align-items:center;
+  padding:12px;
 }
-
 .logo{
-  color:#c2185b;
   font-size:28px;
   font-weight:bold;
+  color:var(--pink);
 }
-
-.profile{
-  text-align:center;
-  margin-top:20px;
-}
-
-.profile-circle{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background:#fde6ef;
-  border:4px solid #c2185b;
-  margin:auto;
-}
-
-.user-id{
-  color:#c2185b;
-  margin:10px 0;
-}
-
-.action-row{
+.header-icons{
   display:flex;
-  justify-content:center;
   gap:10px;
 }
+.icon{
+  width:36px;height:36px;
+  border-radius:50%;
+  background:var(--light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
 
+/* LEFT MENU */
+.left{
+  position:absolute;
+  top:70px;
+  left:10px;
+}
 .btn{
-  background:#c2185b;
+  background:var(--pink);
   color:#fff;
   border:none;
   padding:8px 16px;
   border-radius:20px;
+  margin-top:6px;
 }
 
-.media{
+/* PROFILE */
+.profile{
+  text-align:center;
+  margin-top:20px;
+}
+.profile-pic{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:4px solid var(--pink);
+  margin:auto;
+  background:url("https://via.placeholder.com/150") center/cover;
+}
+.username{
+  color:var(--pink);
+  margin:10px 0;
+  font-size:18px;
+}
+
+.row{
   display:flex;
   justify-content:center;
-  gap:40px;
-  margin-top:30px;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
+/* STORY / PHOTO */
+.section{
+  margin-top:20px;
+  padding:0 10px;
+}
+.title{
+  color:var(--pink);
+  margin-bottom:5px;
+}
+.scroll{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
 .box{
-  width:80px;
+  min-width:80px;
   height:80px;
-  border-radius:10px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#fff;
+  cursor:pointer;
+}
+.add{background:var(--pink);}
+.item{
+  background:#f3b3cc;
 }
 
-.add{background:#c2185b;}
-.disabled{background:#f3b3cc;}
+/* FEED */
+.feed{
+  padding:10px;
+}
+.post{
+  background:#fff;
+  border-radius:12px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.post img, .post video{
+  width:100%;
+}
+
+/* BOTTOM */
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:55px;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #eee;
+}
+.nav{
+  font-size:22px;
+}
 
 .logout{
   text-align:center;
-  margin-top:40px;
+  margin:20px;
 }
 </style>
-
 </head>
 
 <body>
@@ -93,42 +158,119 @@ if(!localStorage.getItem("token")){
 }
 </script>
 
+<!-- HEADER -->
 <div class="header">
   <div class="logo">BiggEyes</div>
+  <div class="header-icons">
+    <div class="icon" onclick="upload('story')">+</div>
+    <div class="icon" onclick="upload('photo')">🖼</div>
+  </div>
 </div>
 
+<!-- LEFT -->
+<div class="left">
+  <button class="btn">PASS</button><br>
+  <button class="btn">MENU</button>
+</div>
+
+<!-- PROFILE -->
 <div class="profile">
-  <div class="profile-circle"></div>
-  <div class="user-id">@user</div>
+  <div class="profile-pic" onclick="upload('photo')"></div>
+  <div class="username" id="user">@user</div>
 
-  <div class="action-row">
+  <div class="row">
     <button class="btn">BEST</button>
-    <button class="btn">VIP</button>
-    <button class="btn">FRIENDS</button>
+    <button class="btn">VIP MODE</button>
+    <button class="btn">FOLLOW</button>
+    <button class="btn">MORE</button>
   </div>
 </div>
 
-<div class="media">
-  <div>
-    <h3 style="color:#c2185b">Story</h3>
-    <div class="box add">Add</div>
-  </div>
-
-  <div>
-    <h3 style="color:#c2185b">Photo</h3>
-    <div class="box add">Add</div>
+<!-- STORY -->
+<div class="section">
+  <div class="title">Story</div>
+  <div class="scroll" id="storyBox">
+    <div class="box add" onclick="upload('story')">Add</div>
   </div>
 </div>
+
+<!-- PHOTO -->
+<div class="section">
+  <div class="title">Photo</div>
+  <div class="scroll" id="photoBox">
+    <div class="box add" onclick="upload('photo')">Add</div>
+  </div>
+</div>
+
+<!-- FEED -->
+<div class="feed" id="feed"></div>
 
 <div class="logout">
   <button class="btn" onclick="logout()">Logout</button>
 </div>
 
+<!-- BOTTOM -->
+<div class="bottom">
+  <div class="nav">🏠</div>
+  <div class="nav">🔍</div>
+  <div class="nav">👤</div>
+</div>
+
+<input type="file" id="file" hidden>
+
 <script>
+let type="photo";
+
+function upload(t){
+  type=t;
+  document.getElementById("file").click();
+}
+
+document.getElementById("file").onchange=function(){
+  const file=this.files[0];
+  if(!file) return;
+
+  const url=URL.createObjectURL(file);
+
+  // add to story/photo
+  const div=document.createElement("div");
+  div.className="box item";
+  div.style.background=`url(${url}) center/cover`;
+
+  if(type==="story"){
+    document.getElementById("storyBox").appendChild(div);
+  }else{
+    document.getElementById("photoBox").appendChild(div);
+  }
+
+  // add to feed
+  const post=document.createElement("div");
+  post.className="post";
+
+  if(file.type.startsWith("image")){
+    post.innerHTML=`<img src="${url}">`;
+  }else{
+    post.innerHTML=`<video src="${url}" controls></video>`;
+  }
+
+  document.getElementById("feed").prepend(post);
+};
+
 function logout(){
   localStorage.clear();
   location.href="login.html";
 }
+
+// user load
+fetch("https://biggeyes.onrender.com/api/user/profile",{
+  headers:{Authorization:"Bearer "+localStorage.getItem("token")}
+})
+.then(r=>r.json())
+.then(d=>{
+  if(d.user?.email){
+    document.getElementById("user").innerText="@"+d.user.email.split("@")[0];
+  }
+});
 </script>
 
 </body>
